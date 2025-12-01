@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - TransportCo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 40px;
+            flex-shrink: 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #0047AB;
+            text-decoration: none;
+        }
+        
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        nav a.active {
+            color: #0047AB;
+            font-weight: 600;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-login, .btn-register, .btn-order {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .btn-login {
+            border: 2px solid #0047AB;
+            color: #0047AB;
+            background: white;
+        }
+        
+        .btn-register {
+            background: #0047AB;
+            color: white;
+        }
+        
+        .btn-order {
+            background: #F49B00;
+            color: white;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #0047AB 0%, #003580 100%);
+            color: white;
+            padding: 60px 40px;
+            flex-shrink: 0;
+        }
+        
+        .page-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+        
+        .page-header p {
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            flex: 1 0 auto;
+        }
+        
+        .upper-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        
+        .contact-section, .map-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            height: fit-content;
+        }
+        
+        .contact-section h2, .map-container h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #0047AB;
+        }
+        
+        .contact-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .contact-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .contact-item h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            color: #F49B00;
+            margin-bottom: 8px;
+        }
+        
+        .contact-item p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .map-placeholder {
+            height: 500px;
+            width: 1000px;
+            background: #e9ecef;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .lower-section {
+            margin: 0 -20px;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .contact-form h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #0047AB;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0047AB;
+            box-shadow: 0 0 0 3px rgba(0, 71, 171, 0.1);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #F49B00;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #003580;
+        }
+        
+        footer {
+            background: #0047AB;
+            color: white;
+            text-align: center;
+            padding: 30px 40px;
+            flex-shrink: 0;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">TransportCo</a>
+            <nav>
+                <a href="main.html">Главная</a>
+                <a href="about_company.html">О компании</a>
+                <a href="services.html">Услуги</a>
+                <a href="prising.html">Тарифы</a>
+                <a href="contacts.html" class="active">Контакты</a>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn-login" onclick="openLoginModal()">Вход</button>
+                <button class="btn-register" onclick="openRegisterModal()">Регистрация</button>
+                <button class="btn-order" onclick="window.location.href='/order'">Заказать перевозку</button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="page-header">
+        <div class="page-header-content">
+            <h1>Контакты</h1>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="upper-section">
+            <div class="contact-section">
+                <h2>Информация о компании</h2>
+                <div class="contact-item">
+                    <h3>Адрес</h3>
+                    <p>г. Кострома, ул. Титова, д.4</p>
+                </div>
+                <div class="contact-item">
+                    <h3>Телефон</h3>
+                    <p>+7 (812) 156-43-89</p>
+                </div>
+                <div class="contact-item">
+                    <h3>Email</h3>
+                    <p>info@transportco.ru</p>
+                </div>
+                <div class="contact-item">
+                    <h3>Режим работы</h3>
+                    <p>Пн-Пт: 5:00 - 20:00<br>Сб-Вс: Выходной</p>
+                </div>
+            </div>
+            
+            <div class="map-container">
+                <div class="map-placeholder">
+                    Здесь будет карта
+                </div>
+            </div>
+        </div>
+        
+        <div class="lower-section">
+            <div class="contact-form">
+                <h2>Напишите нам</h2>
+                <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                    <div class="form-group">
+                        <label for="contact-name">Ваше имя</label>
+                        <input type="text" id="contact-name" placeholder="Иван Иванов" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email</label>
+                        <input type="email" id="contact-email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-phone">Телефон</label>
+                        <input type="tel" id="contact-phone" placeholder="+7 (812) 156-43-89">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-message">Сообщение</label>
+                        <textarea id="contact-message" placeholder="Ваше сообщение..." rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 TransportCo. Все права защищены.</p>
+    </footer>
+    
+    
+</body>
+</html>

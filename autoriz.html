@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransportCo - Вход в аккаунт</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .header {
+            color: rgb(0, 0, 0);
+            padding: 25px 20px 15px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+        
+        .close-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #0047AB;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+        
+        .form-container {
+            padding: 25px 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            border-color: #0047AB;
+            outline: none;
+        }
+        
+        .options-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 25px 0;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .custom-checkbox {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #0047AB;
+            border-radius: 4px;
+            margin-right: 8px;
+            flex-shrink: 0;
+            transition: background-color 0.3s;
+        }
+        
+        .checkbox-container input {
+            display: none;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0px;
+            left: 5px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .checkbox-container input:checked + .custom-checkbox {
+            background-color: #0047AB;
+        }
+        
+        .checkbox-container input:checked + .custom-checkbox .checkmark {
+            opacity: 1;
+        }
+        
+        .checkbox-text {
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .forgot-password {
+            font-size: 14px;
+            color: #0047AB;
+            text-decoration: none;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: #0047AB;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 20px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .register-link {
+            text-align: center;
+            font-size: 15px;
+            color: #555;
+        }
+        
+        .register-link a {
+            color: #0047AB;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 480px) {
+            .options-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="close-btn">×</div>
+            <div class="logo">TransportCo</div>
+            <div class="subtitle">Вход в аккаунт</div>
+        </div>
+        
+        <div class="form-container">
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="your@email.com">
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" placeholder="......">
+            </div>
+            
+            <div class="options-row">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="rememberMe">
+                    <span class="custom-checkbox">
+                        <span class="checkmark"></span>
+                    </span>
+                    <span class="checkbox-text">Запомнить меня</span>
+                </label>
+                
+                <a href="#" class="forgot-password">Забыли пароль?</a>
+            </div>
+            
+            <button class="login-btn">Войти</button>
+            
+            <div class="register-link">
+                Нет аккаунта? <a href="#">Зарегистрироваться</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
