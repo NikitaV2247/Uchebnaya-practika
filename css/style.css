@@ -17,7 +17,7 @@
             min-height: 100vh;
         }
         
-        /* Верхнее меню */
+        /* Верхнее меню, включено на все разделы*/
         header {
             background: white;
             border-bottom: 1px solid #e0e0e0;
@@ -234,7 +234,7 @@
             opacity: 0.9;
         }
         
-        /* Нижняя часть сайта */
+        /* Нижняя часть сайта, включены на все разделы */
         footer {
             background: #0047AB;
             color: white;
@@ -461,6 +461,7 @@
         /* Конец стилей главной страницы */
 
         /* Начало стилей "О компании" без учета header-content и footer */
+        /* Секция заголовка под верхнее меню. Касается только: */
         .page-header {
             background: linear-gradient(135deg, #0047AB 0%, #003580 100%);
             color: white;
@@ -483,6 +484,7 @@
             font-size: 16px;
         }
         
+        /* Контейнер нескольких классов в разделе "О компании" */
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -490,6 +492,7 @@
             flex: 1 0 auto;
         }
         
+        /* Несколько классов для основной информации в разделе "О компании" */
         .about-section {
             margin-bottom: 50px;
         }
