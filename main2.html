@@ -25,6 +25,99 @@
             min-height: 100vh;
         }
         
+        /* Система уведомлений */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+        }
+        
+        .notification {
+            padding: 16px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease-out;
+            transform: translateX(0);
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+        
+        .notification.hiding {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        
+        .notification-success {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+        
+        .notification-error {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+        
+        .notification-warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+        
+        .notification-info {
+            background-color: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+        
+        .notification-content {
+            flex: 1;
+            margin-right: 15px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: inherit;
+            opacity: 0.7;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: opacity 0.2s;
+        }
+        
+        .notification-close:hover {
+            opacity: 1;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
         /* Шапка сайта */
         header {
             background: white;
@@ -243,7 +336,7 @@
             color: white;
             padding: 60px 40px;
             flex-shrink: 0;
-            margin-top: auto; /* Прижимаем stats к низу */
+            margin-top: auto;
         }
         
         .stats-content {
@@ -388,7 +481,7 @@
         /* Стили "Контакты" */
         .upper-section {
             display: grid;
-            grid-template-columns: 1fr 1.5fr; /* Увеличили ширину карты */
+            grid-template-columns: 1fr 1.5fr;
             gap: 60px;
             margin-bottom: 60px;
         }
@@ -581,6 +674,25 @@
             box-shadow: 0 0 0 3px rgba(0, 71, 171, 0.1);
         }
         
+        /* Стили для ошибок в форме заказа */
+        .order-error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .order-error-message.show {
+            display: block;
+        }
+        
+        .order-form-group input.error,
+        .order-form-group textarea.error,
+        .order-form-group select.error {
+            border-color: #e74c3c;
+            background-color: #fff9f9;
+        }
+        
         .order-divider {
             height: 1px;
             background: #e0e0e0;
@@ -761,18 +873,35 @@
             outline: none;
         }
         
+        /* Стили для ошибок */
+        .auth-input.error {
+            border-color: #e74c3c;
+            background-color: #fff9f9;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
         /* ОБЩИЙ отступ для строки с чекбоксом и ссылкой - УМЕНЬШЕН для авторизации */
         .auth-options-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 15px 0; /* Уменьшенный отступ для обеих форм */
+            margin: 15px 0;
             flex-wrap: wrap;
         }
         
         /* Увеличиваем отступ для формы регистрации */
         #registerModal .auth-options-row {
-            margin: 25px 0; /* Больший отступ только для регистрации */
+            margin: 25px 0;
         }
         
         .auth-checkbox-container {
@@ -780,7 +909,7 @@
             align-items: center;
             cursor: pointer;
             padding: 5px 0;
-            margin-bottom: 30px; /* Для регистрации */
+            margin-bottom: 30px;
         }
         
         .auth-custom-checkbox {
@@ -800,8 +929,8 @@
         
         .auth-checkmark {
             position: absolute;
-            top: 2px;
-            left: 6px;
+            top: 1px;
+            left: 5px;
             width: 6px;
             height: 12px;
             border: solid white;
@@ -841,7 +970,7 @@
         
         /* Убираем большой отступ снизу у чекбокса в авторизации */
         #loginModal .auth-checkbox-container {
-            margin-bottom: 10px; /* Уменьшенный отступ только для авторизации */
+            margin-bottom: 10px;
         }
         
         .auth-btn {
@@ -855,12 +984,12 @@
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 10px; /* Для регистрации */
+            margin-top: 10px;
         }
         
         /* Кнопка входа с меньшим отступом сверху */
         #loginModal .auth-btn {
-            margin-top: 5px; /* Уменьшенный отступ только для авторизации */
+            margin-top: 5px;
         }
         
         .auth-btn:hover {
@@ -1056,7 +1185,94 @@
             background: #003580;
         }
         
-        /* Стили для страницы "Мои заказы" */
+        /* Стили для страницы "Профиль" */
+        .profile-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        .profile-nav-btn {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            position: relative;
+            font-family: 'Montserrat', sans-serif;
+            transition: color 0.3s;
+        }
+
+        .profile-nav-btn:hover {
+            color: #0047AB;
+        }
+
+        .profile-nav-btn.active {
+            color: #0047AB;
+        }
+
+        .profile-nav-btn.active:after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #0047AB;
+        }
+
+        .profile-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 30px;
+        }
+
+        .profile-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            color: #0047AB;
+            margin-bottom: 20px;
+        }
+
+        .profile-section h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            color: #333;
+            margin: 25px 0 15px;
+        }
+
+        .profile-tab {
+            display: block;
+        }
+
+        .profile-tab-content {
+            width: 100%;
+        }
+        
+        /* Стили для полей профиля только для чтения */
+        .profile-field-readonly {
+            border: none;
+            background: transparent;
+            box-shadow: none;
+            pointer-events: none;
+            color: #333;
+            padding-left: 0;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .profile-field-readonly::placeholder {
+            color: #333;
+        }
+
+        /* Стили для страницы "Мои заказы" в профиле */
         .filters-section {
             background: #f9f9f9;
             padding: 20px;
@@ -1162,6 +1378,7 @@
             overflow: hidden;
             border: 1px solid #e0e0e0;
             margin-bottom: 40px;
+            display: none;
         }
 
         .table-header {
@@ -1403,6 +1620,7 @@
             padding: 60px 40px;
             text-align: center;
             border: 1px solid #e0e0e0;
+            display: block;
         }
 
         .no-orders-icon {
@@ -1421,7 +1639,7 @@
             color: #666;
             margin-bottom: 30px;
         }
-
+        
         /* Адаптивность */
         @media (max-width: 1200px) {
             .table-header {
@@ -1663,10 +1881,30 @@
                 flex: 0 0 80px;
                 font-size: 11px;
             }
+            
+            .profile-nav-btn {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            /* Уведомления на мобильных */
+            .notification-container {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+            
+            .notification {
+                padding: 12px 16px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Контейнер для уведомлений -->
+    <div class="notification-container" id="notificationContainer"></div>
+    
     <!-- Шапка сайта -->
     <header>
         <div class="header-content">
@@ -1675,11 +1913,17 @@
                 <a onclick="showPage('main')" class="active">Главная</a>
                 <a onclick="showPage('about')">О компании</a>
                 <a onclick="showPage('contacts')">Контакты</a>
-                <a onclick="showPage('orders')">Мои заказы</a>
+                <a onclick="showPage('profile')">Профиль</a>
             </nav>
             <div class="auth-buttons">
-                <button class="btn-login" onclick="openLoginModal()">Вход</button>
-                <button class="btn-register" onclick="openRegisterModal()">Регистрация</button>
+                <div id="unauth-buttons" style="display: flex; gap: 10px;">
+                    <button class="btn-login" onclick="openLoginModal()">Вход</button>
+                    <button class="btn-register" onclick="openRegisterModal()">Регистрация</button>
+                </div>
+                <div id="auth-user-buttons" style="display: none; gap: 10px;">
+                    <button class="btn-order" onclick="showPage('profile')">Профиль</button>
+                    <button class="btn-login" onclick="logout()">Выйти</button>
+                </div>
                 <button class="btn-order" onclick="showPage('order')">Заказать перевозку</button>
             </div>
         </div>
@@ -1891,251 +2135,175 @@
             </div>
         </div>
 
-        <!-- Страница "Мои заказы" -->
-        <div id="orders-page" class="page-content">
+        <!-- Страница "Профиль" -->
+        <div id="profile-page" class="page-content">
             <div class="page-header">
                 <div class="page-header-content">
-                    <h1>Мои заказы</h1>
-                    <p>Отслеживайте статус ваших доставок в реальном времени</p>
+                    <h1>Профиль</h1>
+                    <p>Управление вашими данными и заказами</p>
                 </div>
             </div>
             
             <div class="container">
-                <!-- Фильтры и поиск -->
-                <div class="filters-section">
-                    <div class="filter-row">
-                        <div class="filter-group">
-                            <label for="status-filter">Статус:</label>
-                            <select id="status-filter">
-                                <option>Все заказы</option>
-                                <option>Новый</option>
-                                <option>Подтвержден</option>
-                                <option>В пути</option>
-                                <option>Доставлен</option>
-                                <option>Отменен</option>
-                            </select>
-                        </div>
-                        
-                        <div class="filter-group">
-                            <label for="period-filter">Период:</label>
-                            <select id="period-filter">
-                                <option>Все время</option>
-                                <option>За неделю</option>
-                                <option>За месяц</option>
-                                <option>За 3 месяца</option>
-                                <option>За год</option>
-                                <option>Выбрать даты</option>
-                            </select>
-                        </div>
-                        
-                        <div class="filter-group">
-                            <label for="search-input">Поиск:</label>
-                            <input type="text" id="search-input" placeholder="Номер заказа или адрес...">
-                        </div>
-                        
-                        <div class="filter-group reset-group">
-                            <button class="reset-btn" onclick="resetFilters()">Сбросить</button>
-                        </div>
-                    </div>
+                <!-- Навигация профиля -->
+                <div class="profile-nav">
+                    <button class="profile-nav-btn active" onclick="showProfileTab('data')">Данные</button>
+                    <button class="profile-nav-btn" onclick="showProfileTab('orders')">Мои заказы</button>
                 </div>
                 
-                <!-- Статистика -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number" id="total-orders-count">0</div>
-                        <div class="stat-label">Всего заказов</div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-number" id="processing-orders-count">0</div>
-                        <div class="stat-label">В обработке</div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-number" id="in-transit-orders-count">0</div>
-                        <div class="stat-label">В пути</div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-number" id="delivered-orders-count">0</div>
-                        <div class="stat-label">Доставлено</div>
-                    </div>
-                </div>
-                
-                <!-- Таблица заказов (отображается при наличии заказов) -->
-                <div id="orders-table" class="orders-table-container">
-                    <!-- Заголовок таблицы -->
-                    <div class="table-header">
-                        <div class="table-header-item">№ ЗАКАЗА</div>
-                        <div class="table-header-item">ДАТА</div>
-                        <div class="table-header-item">ОТ</div>
-                        <div class="table-header-item">ДО</div>
-                        <div class="table-header-item">ГРУЗ</div>
-                        <div class="table-header-item">СТАТУС</div>
-                        <div class="table-header-item">ЦЕНА</div>
-                        <div class="table-header-item">ДЕЙСТВИЯ</div>
-                    </div>
-                    
-                    <!-- Заказ 1 -->
-                    <div class="order-row">
-                        <div class="order-cell order-id" data-label="№ ЗАКАЗА">
-                            <div class="order-id-text">ORD-001</div>
+                <!-- Содержимое вкладок -->
+                <div id="profile-tab-content" class="profile-tab-content">
+                    <!-- Вкладка Данные -->
+                    <div id="profile-data" class="profile-tab active">
+                        <div class="profile-section">
+                            <h2>Личные данные</h2>
+                            <form id="profile-form" onsubmit="handleProfileSubmit(event)">
+                                <div class="order-form-row">
+                                    <div class="order-form-group">
+                                        <label for="profile-first-name">Имя</label>
+                                        <input type="text" id="profile-first-name" class="profile-field-readonly" placeholder="Иван" value="Иван" readonly>
+                                    </div>
+                                    <div class="order-form-group">
+                                        <label for="profile-last-name">Фамилия</label>
+                                        <input type="text" id="profile-last-name" class="profile-field-readonly" placeholder="Иванов" value="Иванов" readonly>
+                                    </div>
+                                </div>
+                                
+                                <div class="order-form-row">
+                                    <div class="order-form-group">
+                                        <label for="profile-email">Email</label>
+                                        <input type="email" id="profile-email" class="profile-field-readonly" placeholder="your@email.com" value="ivan@example.com" readonly>
+                                    </div>
+                                    <div class="order-form-group">
+                                        <label for="profile-phone">Телефон</label>
+                                        <input type="tel" id="profile-phone" class="profile-field-readonly" placeholder="+7 (912) 156-43-89" value="+7 (912) 156-43-89" readonly>
+                                    </div>
+                                </div>
+                                
+                                <h3>Смена пароля</h3>
+                                <div class="order-divider"></div>
+                                
+                                <div class="order-form-group">
+                                    <label for="profile-current-password">Текущий пароль</label>
+                                    <input type="password" id="profile-current-password" placeholder="Текущий пароль">
+                                </div>
+                                
+                                <div class="order-form-row">
+                                    <div class="order-form-group">
+                                        <label for="profile-new-password">Новый пароль</label>
+                                        <input type="password" id="profile-new-password" placeholder="Новый пароль">
+                                    </div>
+                                    <div class="order-form-group">
+                                        <label for="profile-confirm-password">Подтвердите пароль</label>
+                                        <input type="password" id="profile-confirm-password" placeholder="Подтвердите пароль">
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="order-submit-btn">Сохранить изменения</button>
+                            </form>
                         </div>
                         
-                        <div class="order-cell order-date" data-label="ДАТА">
-                            <div class="date-container">
-                                <div class="date-day">15 января</div>
-                                <div class="date-year">2024 г.</div>
+                        <div class="profile-section">
+                            <h2>Настройки уведомлений</h2>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="notify-email" checked>
+                                    Уведомления по Email
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="notify-sms" checked>
+                                    Уведомления по SMS
+                                </label>
                             </div>
                         </div>
-                        
-                        <div class="order-cell order-from" data-label="ОТ">
-                            <div class="address-container">
-                                <div class="address-line">ул. Ленина, 10,</div>
-                                <div class="address-line">Москва</div>
-                            </div>
-                        </div>
-                        
-                        <div class="order-cell order-to" data-label="ДО">
-                            <div class="address-container">
-                                <div class="address-line">ул. Советская, 20,</div>
-                                <div class="address-line">Москва</div>
-                            </div>
-                        </div>
-                        
-                        <div class="order-cell order-cargo" data-label="ГРУЗ">
-                            <div class="cargo-text">Мебель</div>
-                        </div>
-                        
-                        <div class="order-cell order-status-cell" data-label="СТАТУС">
-                            <div class="order-status delivered">
-                                <span class="status-icon">●</span> Доставлен
-                            </div>
-                        </div>
-                        
-                        <div class="order-cell order-price-cell" data-label="ЦЕНА">
-                            <div class="order-price">5 000,00 ₽</div>
-                        </div>
-                        
-                        <div class="order-cell order-actions-cell" data-label="ДЕЙСТВИЯ">
-                            <div class="actions-container">
-                                <div class="order-buttons">
-                                    <button class="view-btn" onclick="viewOrder('ORD-001')">Просмотр</button>
-                                    <button class="track-btn" onclick="trackOrder('ORD-001')">Отслеживание</button>
+                    </div>
+                    
+                    <!-- Вкладка Мои заказы -->
+                    <div id="profile-orders" class="profile-tab" style="display: none;">
+                        <!-- Фильтры и поиск -->
+                        <div class="filters-section">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label for="profile-status-filter">Статус:</label>
+                                    <select id="profile-status-filter">
+                                        <option>Все заказы</option>
+                                        <option>Новый</option>
+                                        <option>Подтвержден</option>
+                                        <option>В пути</option>
+                                        <option>Доставлен</option>
+                                        <option>Отменен</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label for="profile-period-filter">Период:</label>
+                                    <select id="profile-period-filter">
+                                        <option>Все время</option>
+                                        <option>За неделю</option>
+                                        <option>За месяц</option>
+                                        <option>За 3 месяца</option>
+                                        <option>За год</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label for="profile-search-input">Поиск:</label>
+                                    <input type="text" id="profile-search-input" placeholder="Номер заказа или адрес...">
+                                </div>
+                                
+                                <div class="filter-group reset-group">
+                                    <button class="reset-btn" onclick="resetProfileFilters()">Сбросить</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Заказ 2 -->
-                    <div class="order-row">
-                        <div class="order-cell order-id" data-label="№ ЗАКАЗА">
-                            <div class="order-id-text">ORD-002</div>
-                        </div>
                         
-                        <div class="order-cell order-date" data-label="ДАТА">
-                            <div class="date-container">
-                                <div class="date-day">16 января</div>
-                                <div class="date-year">2024 г.</div>
+                        <!-- Статистика -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number" id="profile-total-orders-count">0</div>
+                                <div class="stat-label">Всего заказов</div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-number" id="profile-processing-orders-count">0</div>
+                                <div class="stat-label">В обработке</div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-number" id="profile-in-transit-orders-count">0</div>
+                                <div class="stat-label">В пути</div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-number" id="profile-delivered-orders-count">0</div>
+                                <div class="stat-label">Доставлено</div>
                             </div>
                         </div>
                         
-                        <div class="order-cell order-from" data-label="ОТ">
-                            <div class="address-container">
-                                <div class="address-line">ул. Пушкина, 5,</div>
-                                <div class="address-line">Москва</div>
+                        <!-- Таблица заказов -->
+                        <div id="profile-orders-table" class="orders-table-container" style="display: none;">
+                            <div class="table-header">
+                                <div class="table-header-item">№ ЗАКАЗА</div>
+                                <div class="table-header-item">ДАТА</div>
+                                <div class="table-header-item">АДРЕС ОТПРАВЛЕНИЯ</div>
+                                <div class="table-header-item">АДРЕС ДОСТАВКИ</div>
+                                <div class="table-header-item">ГРУЗ</div>
+                                <div class="table-header-item">СТАТУС</div>
+                                <div class="table-header-item">ЦЕНА</div>
+                                <div class="table-header-item">ДЕЙСТВИЯ</div>
                             </div>
                         </div>
                         
-                        <div class="order-cell order-to" data-label="ДО">
-                            <div class="address-container">
-                                <div class="address-line">ул. Толстого, 15,</div>
-                                <div class="address-line">Москва</div>
-                            </div>
-                        </div>
-                        
-                        <div class="order-cell order-cargo" data-label="ГРУЗ">
-                            <div class="cargo-text">Документы</div>
-                        </div>
-                        
-                        <div class="order-cell order-status-cell" data-label="СТАТУС">
-                            <div class="order-status in-transit">
-                                <span class="status-icon">●</span> В пути
-                            </div>
-                        </div>
-                        
-                        <div class="order-cell order-price-cell" data-label="ЦЕНА">
-                            <div class="order-price">1 500,00 ₽</div>
-                        </div>
-                        
-                        <div class="order-cell order-actions-cell" data-label="ДЕЙСТВИЯ">
-                            <div class="actions-container">
-                                <div class="order-buttons">
-                                    <button class="view-btn" onclick="viewOrder('ORD-002')">Просмотр</button>
-                                    <button class="track-btn" onclick="trackOrder('ORD-002')">Отслеживание</button>
-                                </div>
-                            </div>
+                        <!-- Сообщение при отсутствии заказов -->
+                        <div id="profile-no-orders-message" class="no-orders-container" style="display: block;">
+                            <div class="no-orders-icon">📦</div>
+                            <h3>Заказов нет</h3>
+                            <p>У вас пока нет оформленных заказов</p>
+                            <button class="btn-order" onclick="showPage('order')">Сделать первый заказ</button>
                         </div>
                     </div>
-
-                    <!-- Заказ 3 (пример дополнительного заказа) -->
-                    <div class="order-row">
-                        <div class="order-cell order-id" data-label="№ ЗАКАЗА">
-                            <div class="order-id-text">ORD-003</div>
-                        </div>
-                        
-                        <div class="order-cell order-date" data-label="ДАТА">
-                            <div class="date-container">
-                                <div class="date-day">14 января</div>
-                                <div class="date-year">2024 г.</div>
-                            </div>
-                        </div>
-                        
-                        <div class="order-cell order-from" data-label="ОТ">
-                            <div class="address-container">
-                                <div class="address-line">ул. Кирова, 25,</div>
-                                <div class="address-line">Санкт-Петербург</div>
-                            </div>
-                        </div>
-                        
-                        <div class="order-cell order-to" data-label="ДО">
-                            <div class="address-container">
-                                <div class="address-line">ул. Невская, 8,</div>
-                                <div class="address-line">Москва</div>
-                            </div>
-                        </div>
-                        
-                        <div class="order-cell order-cargo" data-label="ГРУЗ">
-                            <div class="cargo-text">Электроника</div>
-                        </div>
-                        
-                        <div class="order-cell order-status-cell" data-label="СТАТУС">
-                            <div class="order-status new">
-                                <span class="status-icon">●</span> Новый
-                            </div>
-                        </div>
-                        
-                        <div class="order-cell order-price-cell" data-label="ЦЕНА">
-                            <div class="order-price">3 200,00 ₽</div>
-                        </div>
-                        
-                        <div class="order-cell order-actions-cell" data-label="ДЕЙСТВИЯ">
-                            <div class="actions-container">
-                                <div class="order-buttons">
-                                    <button class="view-btn" onclick="viewOrder('ORD-003')">Просмотр</button>
-                                    <button class="track-btn" onclick="trackOrder('ORD-003')">Отслеживание</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Сообщение при отсутствии заказов (скрыто по умолчанию) -->
-                <div id="no-orders-message" class="no-orders-container" style="display: none;">
-                    <div class="no-orders-icon">📦</div>
-                    <h3>Заказов нет</h3>
-                    <p>У вас пока нет оформленных заказов</p>
-                    <button class="btn-order" onclick="showPage('order')">Сделать первый заказ</button>
                 </div>
             </div>
         </div>
@@ -2164,17 +2332,20 @@
                             <div class="order-form-group">
                                 <label for="sender-name" class="required">Ваше имя</label>
                                 <input type="text" id="sender-name" placeholder="Иван Иванов" required>
+                                <div class="order-error-message" id="sender-name-error"></div>
                             </div>
                             
                             <div class="order-form-group">
                                 <label for="sender-phone" class="required">Телефон</label>
                                 <input type="tel" id="sender-phone" placeholder="+7 (912) 156-43-89" required>
+                                <div class="order-error-message" id="sender-phone-error"></div>
                             </div>
                         </div>
                         
                         <div class="order-form-group">
                             <label for="sender-email">Email</label>
                             <input type="email" id="sender-email" placeholder="your@email.com">
+                            <div class="order-error-message" id="sender-email-error"></div>
                         </div>
                     </div>
                     
@@ -2187,6 +2358,26 @@
                         <div class="order-form-group">
                             <label for="cargo-description" class="required">Описание груза</label>
                             <textarea id="cargo-description" placeholder="Опишите груз, его характеристики и особенности упаковки" rows="3" required></textarea>
+                            <div class="order-error-message" id="cargo-description-error"></div>
+                        </div>
+                        
+                        <!-- Добавлено поле для категории товаров -->
+                        <div class="order-form-group">
+                            <label for="product-category" class="required">Категория товара</label>
+                            <select id="product-category" required>
+                                <option value="">Выберите категорию</option>
+                                <option value="electronics">Электроника</option>
+                                <option value="clothing">Одежда и обувь</option>
+                                <option value="furniture">Мебель</option>
+                                <option value="food">Продукты питания</option>
+                                <option value="building">Строительные материалы</option>
+                                <option value="auto">Автозапчасти</option>
+                                <option value="industrial">Промышленное оборудование</option>
+                                <option value="chemicals">Химические вещества</option>
+                                <option value="documents">Документы</option>
+                                <option value="other">Другое</option>
+                            </select>
+                            <div class="order-error-message" id="product-category-error"></div>
                         </div>
                         
                         <div class="order-form-group">
@@ -2195,6 +2386,7 @@
                                 <input type="number" id="cargo-weight" placeholder="1" required>
                                 <span>кг</span>
                             </div>
+                            <div class="order-error-message" id="cargo-weight-error"></div>
                         </div>
                         
                         <div class="order-form-group">
@@ -2203,6 +2395,7 @@
                                 <input type="number" id="cargo-volume" placeholder="1" required>
                                 <span>м³</span>
                             </div>
+                            <div class="order-error-message" id="cargo-volume-error"></div>
                         </div>
                         
                         <div class="order-form-row">
@@ -2215,11 +2408,13 @@
                                     <option value="dangerous">Опасный груз</option>
                                     <option value="perishable">Скоропортящийся груз</option>
                                 </select>
+                                <div class="order-error-message" id="cargo-type-error"></div>
                             </div>
                             
                             <div class="order-form-group">
                                 <label for="shipping-date" class="required">Дата отправки</label>
                                 <input type="date" id="shipping-date" required>
+                                <div class="order-error-message" id="shipping-date-error"></div>
                             </div>
                         </div>
                     </div>
@@ -2233,11 +2428,13 @@
                         <div class="order-form-group">
                             <label for="pickup-address" class="required">Адрес отправки</label>
                             <input type="text" id="pickup-address" placeholder="Кострома, ул. Ленина, д. 10" required>
+                            <div class="order-error-message" id="pickup-address-error"></div>
                         </div>
                         
                         <div class="order-form-group">
                             <label for="delivery-address" class="required">Адрес доставки</label>
                             <input type="text" id="delivery-address" placeholder="Москва, ул. Арбат, д. 5" required>
+                            <div class="order-error-message" id="delivery-address-error"></div>
                         </div>
                     </div>
                     
@@ -2302,11 +2499,13 @@
                 <div class="auth-input-group">
                     <label for="auth-login">Телефон или Email</label>
                     <input class="auth-input" type="text" id="auth-login" placeholder="+7 930 913 78 79 или your@email.com">
+                    <div class="error-message" id="auth-login-error"></div>
                 </div>
                 
                 <div class="auth-input-group">
                     <label for="auth-password">Пароль</label>
                     <input class="auth-input" type="password" id="auth-password" placeholder="......">
+                    <div class="error-message" id="auth-password-error"></div>
                 </div>
                 
                 <div class="auth-options-row">
@@ -2343,31 +2542,37 @@
                     <div class="auth-input-group">
                         <label for="reg-firstName">Имя</label>
                         <input class="auth-input" type="text" id="reg-firstName" placeholder="Иван">
+                        <div class="error-message" id="reg-firstName-error"></div>
                     </div>
                     <div class="auth-input-group">
                         <label for="reg-lastName">Фамилия</label>
                         <input class="auth-input" type="text" id="reg-lastName" placeholder="Иванов">
+                        <div class="error-message" id="reg-lastName-error"></div>
                     </div>
                 </div>
                 
                 <div class="auth-input-group">
                     <label for="reg-email">Email</label>
                     <input class="auth-input" type="email" id="reg-email" placeholder="your@email.com">
+                    <div class="error-message" id="reg-email-error"></div>
                 </div>
                 
                 <div class="auth-input-group">
                     <label for="reg-phone">Телефон</label>
                     <input class="auth-input" type="tel" id="reg-phone" placeholder="+7 (812) 156-43-89">
+                    <div class="error-message" id="reg-phone-error"></div>
                 </div>
                 
                 <div class="auth-input-group">
                     <label for="reg-password">Пароль</label>
                     <input class="auth-input" type="password" id="reg-password" placeholder="......">
+                    <div class="error-message" id="reg-password-error"></div>
                 </div>
                 
                 <div class="auth-input-group">
                     <label for="reg-confirmPassword">Подтвердить пароль</label>
                     <input class="auth-input" type="password" id="reg-confirmPassword" placeholder="......">
+                    <div class="error-message" id="reg-confirmPassword-error"></div>
                 </div>
                 
                 <label class="auth-checkbox-container">
@@ -2382,6 +2587,48 @@
                 
                 <div class="auth-link">
                     Уже есть аккаунт? <a onclick="switchToLogin()">Войти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно подтверждения телефона при регистрации -->
+    <div id="confirmRegisterCodeModal" class="modal">
+        <div class="auth-container">
+            <div class="auth-header">
+                <button class="close-auth-btn" onclick="closeConfirmRegisterCodeModal()">×</button>
+                <div class="auth-logo">TransportCo</div>
+                <div class="auth-subtitle">Подтвердите телефон</div>
+            </div>
+            
+            <div class="auth-form-container">
+                <div class="sms-code-info">
+                    На ваш телефон было отправлено<br>CМС-сообщение с кодом подтверждения.
+                </div>
+                
+                <div class="auth-input-group">
+                    <label for="reg-sms-code" style="text-align: center; display: block;">КОД ИЗ СМС</label>
+                    <div class="sms-code-input">
+                        <input type="text" id="reg-sms-code-1" maxlength="1" oninput="moveToNextRegister(1, event)">
+                        <input type="text" id="reg-sms-code-2" maxlength="1" oninput="moveToNextRegister(2, event)">
+                        <input type="text" id="reg-sms-code-3" maxlength="1" oninput="moveToNextRegister(3, event)">
+                        <input type="text" id="reg-sms-code-4" maxlength="1" oninput="moveToNextRegister(4, event)">
+                    </div>
+                </div>
+                
+                <div class="sms-timer" id="reg-sms-timer">
+                    Пожалуйста подождите... 59 сек
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="resend-code disabled" id="reg-resend-code">
+                    Не приходит код? <a onclick="resendRegisterCode()">Отправить снова</a>
+                </div>
+                
+                <div class="confirm-code-buttons">
+                    <button class="continue-btn" onclick="verifyRegisterCode()">Подтвердить регистрацию</button>
+                    <button class="back-btn" onclick="backToRegister()">Назад</button>
                 </div>
             </div>
         </div>
@@ -2449,9 +2696,7 @@
                 </div>
                 
                 <div class="confirm-code-buttons">
-                    <!-- Сначала идет кнопка "Продолжить" -->
                     <button class="continue-btn" onclick="verifyCode()">Продолжить</button>
-                    <!-- Затем кнопка "Назад" -->
                     <button class="back-btn" onclick="backToForgotPassword()">Назад</button>
                 </div>
             </div>
@@ -2459,6 +2704,133 @@
     </div>
 
     <script>
+        // Система уведомлений
+        function showNotification(message, type = 'info', duration = 5000) {
+            const container = document.getElementById('notificationContainer');
+            
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            
+            notification.innerHTML = `
+                <div class="notification-content">${message}</div>
+                <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            container.appendChild(notification);
+            
+            // Автоматическое удаление через указанное время
+            if (duration > 0) {
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.classList.add('hiding');
+                        setTimeout(() => {
+                            if (notification.parentElement) {
+                                notification.remove();
+                            }
+                        }, 300);
+                    }
+                }, duration);
+            }
+            
+            return notification;
+        }
+        
+        // API конфигурация
+        const API_BASE_URL = 'http://localhost:3000/api';
+        
+        // Общие функции для работы с API
+        async function apiRequest(endpoint, method = 'GET', data = null, token = null) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const headers = {
+                'Content-Type': 'application/json',
+            };
+            
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+            
+            const options = {
+                method,
+                headers,
+            };
+            
+            if (data && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
+                options.body = JSON.stringify(data);
+            }
+            
+            try {
+                const response = await fetch(url, options);
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+                }
+                
+                return await response.json();
+            } catch (error) {
+                console.error('API request failed:', error);
+                showNotification(`Ошибка: ${error.message}`, 'error');
+                throw error;
+            }
+        }
+        
+        // Функции для работы с пользователем
+        async function loginUserAPI(login, password) {
+            return apiRequest('/auth/login', 'POST', { login, password });
+        }
+        
+        async function registerUserAPI(userData) {
+            return apiRequest('/auth/register', 'POST', userData);
+        }
+        
+        async function verifyPhoneAPI(phone, code) {
+            return apiRequest('/auth/verify-phone', 'POST', { phone, code });
+        }
+        
+        async function sendRecoveryCodeAPI(contact) {
+            return apiRequest('/auth/recovery-code', 'POST', { contact });
+        }
+        
+        async function resetPasswordAPI(contact, code, newPassword) {
+            return apiRequest('/auth/reset-password', 'POST', { contact, code, newPassword });
+        }
+        
+        // Функции для работы с заказами
+        async function createOrderAPI(orderData, token) {
+            return apiRequest('/orders', 'POST', orderData, token);
+        }
+        
+        async function getUserOrdersAPI(token, filters = {}) {
+            let endpoint = '/orders/user';
+            const queryParams = new URLSearchParams(filters).toString();
+            if (queryParams) {
+                endpoint += `?${queryParams}`;
+            }
+            return apiRequest(endpoint, 'GET', null, token);
+        }
+        
+        async function getOrderStatsAPI(token) {
+            return apiRequest('/orders/stats', 'GET', null, token);
+        }
+        
+        // Функции для работы с профилем
+        async function getProfileAPI(token) {
+            return apiRequest('/profile', 'GET', null, token);
+        }
+        
+        async function updateProfileAPI(profileData, token) {
+            return apiRequest('/profile', 'PUT', profileData, token);
+        }
+        
+        async function updatePasswordAPI(passwordData, token) {
+            return apiRequest('/profile/password', 'PUT', passwordData, token);
+        }
+        
+        // Функции для работы с контактами
+        async function sendContactMessageAPI(contactData) {
+            return apiRequest('/contact', 'POST', contactData);
+        }
+        
         // Функция для переключения страниц
         function showPage(pageId) {
             // Скрыть все страницы
@@ -2482,9 +2854,9 @@
             // Прокрутить вверх
             window.scrollTo(0, 0);
             
-            // Если показываем страницу заказов, обновляем статистику
-            if (pageId === 'orders') {
-                updateOrderStats();
+            // Если показываем страницу профиля, показываем вкладку "Данные"
+            if (pageId === 'profile') {
+                showProfileTab('data');
             }
         }
         
@@ -2494,11 +2866,229 @@
                 'main': 'Главная',
                 'about': 'О компании',
                 'contacts': 'Контакты',
-                'orders': 'Мои заказы',
+                'profile': 'Профиль',
                 'order': 'Заказать перевозку'
             };
             
             return pageNames[pageId] || 'Главная';
+        }
+        
+        // Функция переключения вкладок профиля
+        function showProfileTab(tabName) {
+            // Убираем активный класс у всех кнопок
+            const navButtons = document.querySelectorAll('.profile-nav-btn');
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Добавляем активный класс нажатой кнопке
+            document.querySelector(`.profile-nav-btn[onclick*="${tabName}"]`).classList.add('active');
+            
+            // Скрываем все вкладки
+            const tabs = document.querySelectorAll('.profile-tab');
+            tabs.forEach(tab => tab.style.display = 'none');
+            
+            // Показываем выбранную вкладку
+            document.getElementById(`profile-${tabName}`).style.display = 'block';
+            
+            // Если открыли вкладку заказов, обновляем статистику
+            if (tabName === 'orders') {
+                updateProfileOrderStats();
+            }
+        }
+        
+        // Функция обновления статистики заказов в профиле
+        async function updateProfileOrderStats() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            
+            try {
+                const stats = await getOrderStatsAPI(token);
+                document.getElementById('profile-total-orders-count').textContent = stats.total || '0';
+                document.getElementById('profile-processing-orders-count').textContent = stats.processing || '0';
+                document.getElementById('profile-in-transit-orders-count').textContent = stats.inTransit || '0';
+                document.getElementById('profile-delivered-orders-count').textContent = stats.delivered || '0';
+                
+                // Загружаем заказы пользователя
+                const orders = await getUserOrdersAPI(token);
+                if (orders && orders.length > 0) {
+                    displayUserOrders(orders);
+                    toggleOrdersVisibility(true);
+                } else {
+                    toggleOrdersVisibility(false);
+                }
+            } catch (error) {
+                console.error('Ошибка при загрузке статистики заказов:', error);
+                toggleOrdersVisibility(false);
+            }
+        }
+        
+        // Функция отображения заказов пользователя
+        function displayUserOrders(orders) {
+            const ordersTable = document.getElementById('profile-orders-table');
+            const tableBody = ordersTable.querySelector('tbody') || document.createElement('tbody');
+            tableBody.innerHTML = '';
+            
+            orders.forEach(order => {
+                const row = document.createElement('div');
+                row.className = 'order-row';
+                
+                // Форматирование даты
+                const orderDate = new Date(order.createdAt);
+                const formattedDate = orderDate.toLocaleDateString('ru-RU', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                });
+                
+                // Определение статуса
+                const statusClass = getStatusClass(order.status);
+                const statusText = getStatusText(order.status);
+                
+                row.innerHTML = `
+                    <div class="order-cell order-id">
+                        <span class="order-id-text">#${order.id}</span>
+                    </div>
+                    <div class="order-cell date-container">
+                        <span class="date-day">${formattedDate}</span>
+                    </div>
+                    <div class="order-cell address-container">
+                        <span class="address-line">${order.pickupAddress || 'Не указан'}</span>
+                    </div>
+                    <div class="order-cell address-container">
+                        <span class="address-line">${order.deliveryAddress || 'Не указан'}</span>
+                    </div>
+                    <div class="order-cell">
+                        <span class="cargo-text">${order.cargoDescription || 'Не указан'}</span>
+                    </div>
+                    <div class="order-cell order-status-cell">
+                        <div class="order-status ${statusClass}">
+                            <span class="status-icon">●</span>
+                            <span>${statusText}</span>
+                        </div>
+                    </div>
+                    <div class="order-cell order-price-cell">
+                        <span class="order-price">${order.price ? `${order.price} ₽` : 'Рассчитывается'}</span>
+                    </div>
+                    <div class="order-cell order-actions-cell">
+                        <div class="actions-container">
+                            <div class="order-buttons">
+                                <button class="view-btn" onclick="viewOrder('${order.id}')">Подробнее</button>
+                                <button class="track-btn" onclick="trackOrder('${order.id}')">Отследить</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            
+            if (!ordersTable.querySelector('tbody')) {
+                ordersTable.appendChild(tableBody);
+            }
+        }
+        
+        // Вспомогательные функции для статусов
+        function getStatusClass(status) {
+            const statusMap = {
+                'new': 'new',
+                'confirmed': 'confirmed',
+                'processing': 'processing',
+                'in_transit': 'in-transit',
+                'delivered': 'delivered',
+                'cancelled': 'cancelled'
+            };
+            return statusMap[status] || 'new';
+        }
+        
+        function getStatusText(status) {
+            const statusTextMap = {
+                'new': 'Новый',
+                'confirmed': 'Подтвержден',
+                'processing': 'В обработке',
+                'in_transit': 'В пути',
+                'delivered': 'Доставлен',
+                'cancelled': 'Отменен'
+            };
+            return statusTextMap[status] || 'Новый';
+        }
+        
+        // Функция сброса фильтров в профиле
+        function resetProfileFilters() {
+            document.getElementById('profile-status-filter').value = 'Все заказы';
+            document.getElementById('profile-period-filter').value = 'Все время';
+            document.getElementById('profile-search-input').value = '';
+            updateProfileOrderStats();
+        }
+        
+        // Обработчик формы профиля
+        async function handleProfileSubmit(event) {
+            event.preventDefault();
+            
+            const token = localStorage.getItem('token');
+            if (!token) {
+                showNotification('Для изменения профиля необходимо авторизоваться', 'warning');
+                return false;
+            }
+            
+            const currentPassword = document.getElementById('profile-current-password').value;
+            const newPassword = document.getElementById('profile-new-password').value;
+            const confirmPassword = document.getElementById('profile-confirm-password').value;
+            
+            // Проверка на смену пароля
+            if (currentPassword || newPassword || confirmPassword) {
+                if (newPassword !== confirmPassword) {
+                    showNotification('Новый пароль и подтверждение не совпадают', 'error');
+                    return false;
+                }
+                if (newPassword.length < 6) {
+                    showNotification('Новый пароль должен содержать минимум 6 символов', 'error');
+                    return false;
+                }
+                
+                try {
+                    await updatePasswordAPI({
+                        currentPassword,
+                        newPassword
+                    }, token);
+                    showNotification('Пароль успешно изменен!', 'success');
+                    
+                    // Очищаем поля пароля
+                    document.getElementById('profile-current-password').value = '';
+                    document.getElementById('profile-new-password').value = '';
+                    document.getElementById('profile-confirm-password').value = '';
+                } catch (error) {
+                    showNotification(`Ошибка при смене пароля: ${error.message}`, 'error');
+                    return false;
+                }
+            }
+            
+            // Обновление остальных данных профиля
+            const profileData = {
+                address: document.getElementById('profile-address').value
+            };
+            
+            try {
+                await updateProfileAPI(profileData, token);
+                showNotification('Изменения сохранены!', 'success');
+            } catch (error) {
+                showNotification(`Ошибка при сохранении профиля: ${error.message}`, 'error');
+            }
+            
+            return false;
+        }
+        
+        // Функция для имитации авторизации
+        function loginUser() {
+            document.getElementById('unauth-buttons').style.display = 'none';
+            document.getElementById('auth-user-buttons').style.display = 'flex';
+        }
+        
+        async function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            document.getElementById('unauth-buttons').style.display = 'flex';
+            document.getElementById('auth-user-buttons').style.display = 'none';
+            showPage('main');
+            showNotification('Вы успешно вышли из системы', 'info');
         }
         
         // Функции для работы с модальными окнами авторизации и регистрации
@@ -2532,6 +3122,119 @@
             openLoginModal();
         }
         
+        // Функции для модальных окон регистрации с SMS
+        function openConfirmRegisterCodeModal() {
+            document.getElementById('confirmRegisterCodeModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            startRegisterTimer();
+        }
+        
+        function closeConfirmRegisterCodeModal() {
+            document.getElementById('confirmRegisterCodeModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            resetRegisterTimer();
+        }
+        
+        function backToRegister() {
+            closeConfirmRegisterCodeModal();
+            openRegisterModal();
+        }
+        
+        // Функция для перемещения между полями ввода кода при регистрации
+        function moveToNextRegister(currentIndex, event) {
+            const input = event.target;
+            const value = input.value;
+            
+            if (value.length === 1 && currentIndex < 4) {
+                document.getElementById(`reg-sms-code-${currentIndex + 1}`).focus();
+            }
+            
+            if (event.inputType === 'deleteContentBackward' && currentIndex > 1 && value.length === 0) {
+                document.getElementById(`reg-sms-code-${currentIndex - 1}`).focus();
+            }
+        }
+        
+        // Таймер для повторной отправки кода при регистрации
+        let registerTimerInterval;
+        let registerTimerSeconds = 59;
+        
+        function startRegisterTimer() {
+            clearInterval(registerTimerInterval);
+            registerTimerSeconds = 59;
+            
+            const resendCodeElement = document.getElementById('reg-resend-code');
+            resendCodeElement.classList.add('disabled');
+            
+            registerTimerInterval = setInterval(() => {
+                const timerElement = document.getElementById('reg-sms-timer');
+                timerElement.textContent = `Пожалуйста подождите... ${registerTimerSeconds} сек`;
+                
+                if (registerTimerSeconds <= 0) {
+                    clearInterval(registerTimerInterval);
+                    timerElement.textContent = 'Код не пришел?';
+                    resendCodeElement.classList.remove('disabled');
+                }
+                
+                registerTimerSeconds--;
+            }, 1000);
+        }
+        
+        function resetRegisterTimer() {
+            clearInterval(registerTimerInterval);
+            document.getElementById('reg-sms-timer').textContent = 'Пожалуйста подождите... 59 сек';
+            document.getElementById('reg-resend-code').classList.add('disabled');
+        }
+        
+        // Функция для повторной отправки кода при регистрации
+        function resendRegisterCode() {
+            const resendCodeElement = document.getElementById('reg-resend-code');
+            
+            if (resendCodeElement.classList.contains('disabled')) {
+                return;
+            }
+            
+            const phone = document.getElementById('reg-phone').value;
+            if (!phone) {
+                showNotification('Пожалуйста, сначала заполните телефон', 'warning');
+                return;
+            }
+            
+            sendRecoveryCodeAPI(phone)
+                .then(() => {
+                    startRegisterTimer();
+                    showNotification('Код отправлен повторно!', 'success');
+                })
+                .catch(error => {
+                    showNotification(`Ошибка отправки кода: ${error.message}`, 'error');
+                });
+        }
+        
+        // Функция для проверки введенного кода при регистрации
+        async function verifyRegisterCode() {
+            const code1 = document.getElementById('reg-sms-code-1').value;
+            const code2 = document.getElementById('reg-sms-code-2').value;
+            const code3 = document.getElementById('reg-sms-code-3').value;
+            const code4 = document.getElementById('reg-sms-code-4').value;
+            
+            const fullCode = code1 + code2 + code3 + code4;
+            
+            if (fullCode.length !== 4) {
+                showNotification('Пожалуйста, введите полный код из 4 цифр', 'warning');
+                return;
+            }
+            
+            try {
+                const phone = document.getElementById('reg-phone').value;
+                await verifyPhoneAPI(phone, fullCode);
+                showNotification('Регистрация подтверждена! Вы успешно зарегистрировались.', 'success');
+                closeConfirmRegisterCodeModal();
+                loginUser();
+                loadUserProfile();
+            } catch (error) {
+                showNotification(`Ошибка подтверждения регистрации: ${error.message}`, 'error');
+            }
+        }
+        
         // Функции для работы с модальными окнами восстановления пароля
         function openForgotPasswordModal() {
             closeLoginModal();
@@ -2542,19 +3245,19 @@
         function closeForgotPasswordModal() {
             document.getElementById('forgotPasswordModal').classList.remove('active');
             document.body.style.overflow = 'auto';
-            openLoginModal(); // Возвращаемся к окну авторизации
+            openLoginModal();
         }
         
         function openConfirmCodeModal() {
             document.getElementById('confirmCodeModal').classList.add('active');
             document.body.style.overflow = 'hidden';
-            startTimer(); // Запускаем таймер при открытии окна
+            startTimer();
         }
         
         function closeConfirmCodeModal() {
             document.getElementById('confirmCodeModal').classList.remove('active');
             document.body.style.overflow = 'auto';
-            resetTimer(); // Сбрасываем таймер при закрытии окна
+            resetTimer();
         }
         
         function backToForgotPassword() {
@@ -2563,20 +3266,21 @@
         }
         
         // Функция для отправки кода восстановления
-        function sendRecoveryCode() {
+        async function sendRecoveryCode() {
             const contact = document.getElementById('recovery-contact').value;
             
             if (!contact) {
-                alert('Пожалуйста, введите телефон или email');
+                showNotification('Заполните поле с телефоном или email', 'warning');
                 return;
             }
             
-            // Здесь должна быть логика отправки кода на сервер
-            console.log('Отправка кода восстановления на:', contact);
-            
-            // Закрываем текущее окно и открываем окно подтверждения кода
-            closeForgotPasswordModal();
-            openConfirmCodeModal();
+            try {
+                await sendRecoveryCodeAPI(contact);
+                closeForgotPasswordModal();
+                openConfirmCodeModal();
+            } catch (error) {
+                showNotification(`Ошибка отправки кода: ${error.message}`, 'error');
+            }
         }
         
         // Функция для перемещения между полями ввода кода
@@ -2584,12 +3288,10 @@
             const input = event.target;
             const value = input.value;
             
-            // Переходим к следующему полю, если в текущем введен символ
             if (value.length === 1 && currentIndex < 4) {
                 document.getElementById(`sms-code-${currentIndex + 1}`).focus();
             }
             
-            // Возвращаемся к предыдущему полю, если нажата Backspace и поле пустое
             if (event.inputType === 'deleteContentBackward' && currentIndex > 1 && value.length === 0) {
                 document.getElementById(`sms-code-${currentIndex - 1}`).focus();
             }
@@ -2600,15 +3302,12 @@
         let timerSeconds = 59;
         
         function startTimer() {
-            // Сброс таймера
             clearInterval(timerInterval);
             timerSeconds = 59;
             
-            // Блокируем кнопку повторной отправки
             const resendCodeElement = document.getElementById('resend-code');
             resendCodeElement.classList.add('disabled');
             
-            // Обновляем таймер каждую секунду
             timerInterval = setInterval(() => {
                 const timerElement = document.getElementById('sms-timer');
                 timerElement.textContent = `Пожалуйста подождите... ${timerSeconds} сек`;
@@ -2633,24 +3332,23 @@
         function resendCode() {
             const resendCodeElement = document.getElementById('resend-code');
             
-            // Проверяем, не заблокирована ли кнопка
             if (resendCodeElement.classList.contains('disabled')) {
                 return;
             }
             
-            // Здесь должна быть логика повторной отправки кода
-            console.log('Повторная отправка кода');
-            
-            // Запускаем таймер заново
-            startTimer();
-            
-            // Показываем сообщение об успешной отправке
-            alert('Код отправлен повторно!');
+            const contact = document.getElementById('recovery-contact').value;
+            sendRecoveryCodeAPI(contact)
+                .then(() => {
+                    startTimer();
+                    showNotification('Код отправлен повторно!', 'success');
+                })
+                .catch(error => {
+                    showNotification(`Ошибка отправки кода: ${error.message}`, 'error');
+                });
         }
         
         // Функция для проверки введенного кода
-        function verifyCode() {
-            // Собираем код из всех полей
+        async function verifyCode() {
             const code1 = document.getElementById('sms-code-1').value;
             const code2 = document.getElementById('sms-code-2').value;
             const code3 = document.getElementById('sms-code-3').value;
@@ -2659,46 +3357,149 @@
             const fullCode = code1 + code2 + code3 + code4;
             
             if (fullCode.length !== 4) {
-                alert('Пожалуйста, введите полный код из 4 цифр');
+                showNotification('Пожалуйста, введите полный код из 4 цифр', 'warning');
                 return;
             }
             
-            // Здесь должна быть логика проверки кода на сервере
-            console.log('Проверка кода:', fullCode);
+            const contact = document.getElementById('recovery-contact').value;
             
-            // В демо-версии просто показываем успех
-            alert('Код подтвержден! Теперь вы можете создать новый пароль.');
-            closeConfirmCodeModal();
-            // Здесь обычно открывается окно для создания нового пароля
-            // openNewPasswordModal();
+            // Вместо prompt используем модальное окно или форму для ввода пароля
+            // Для простоты пока оставим так
+            const newPassword = prompt('Введите новый пароль:');
+            
+            if (!newPassword || newPassword.length < 6) {
+                showNotification('Пароль должен содержать не менее 6 символов', 'error');
+                return;
+            }
+            
+            try {
+                await resetPasswordAPI(contact, fullCode, newPassword);
+                showNotification('Пароль успешно изменен! Теперь вы можете войти с новым паролем.', 'success');
+                closeConfirmCodeModal();
+            } catch (error) {
+                showNotification(`Ошибка сброса пароля: ${error.message}`, 'error');
+            }
+        }
+        
+        // Функции для отображения ошибок в формах авторизации/регистрации
+        function showError(inputId, message) {
+            const input = document.getElementById(inputId);
+            const errorElement = document.getElementById(inputId + '-error');
+            
+            if (input && errorElement) {
+                input.classList.add('error');
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+                errorElement.style.display = 'block';
+            }
+        }
+        
+        function clearError(inputId) {
+            const input = document.getElementById(inputId);
+            const errorElement = document.getElementById(inputId + '-error');
+            
+            if (input && errorElement) {
+                input.classList.remove('error');
+                errorElement.textContent = '';
+                errorElement.classList.remove('show');
+                errorElement.style.display = 'none';
+            }
+        }
+        
+        function clearAllErrors() {
+            const errorMessages = document.querySelectorAll('.error-message');
+            const inputs = document.querySelectorAll('.auth-input');
+            
+            errorMessages.forEach(error => {
+                error.textContent = '';
+                error.classList.remove('show');
+                error.style.display = 'none';
+            });
+            
+            inputs.forEach(input => {
+                input.classList.remove('error');
+            });
+        }
+        
+        // Функции для отображения ошибок в форме заказа
+        function showOrderError(inputId, message) {
+            const input = document.getElementById(inputId);
+            const errorElement = document.getElementById(inputId + '-error');
+            
+            if (input && errorElement) {
+                input.classList.add('error');
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+                errorElement.style.display = 'block';
+            }
+        }
+        
+        function clearOrderError(inputId) {
+            const input = document.getElementById(inputId);
+            const errorElement = document.getElementById(inputId + '-error');
+            
+            if (input && errorElement) {
+                input.classList.remove('error');
+                errorElement.textContent = '';
+                errorElement.classList.remove('show');
+                errorElement.style.display = 'none';
+            }
+        }
+        
+        function clearAllOrderErrors() {
+            const errorMessages = document.querySelectorAll('.order-error-message');
+            const inputs = document.querySelectorAll('#orderForm input, #orderForm textarea, #orderForm select');
+            
+            errorMessages.forEach(error => {
+                error.textContent = '';
+                error.classList.remove('show');
+                error.style.display = 'none';
+            });
+            
+            inputs.forEach(input => {
+                input.classList.remove('error');
+            });
         }
         
         // Обработчики форм
-        function handleLogin() {
+        async function handleLogin() {
             const login = document.getElementById('auth-login').value;
             const password = document.getElementById('auth-password').value;
             
-            if (!login || !password) {
-                alert('Пожалуйста, заполните все поля');
+            clearAllErrors();
+            
+            let hasError = false;
+            
+            if (!login) {
+                showError('auth-login', 'Заполните это поле');
+                hasError = true;
+            }
+            
+            if (!password) {
+                showError('auth-password', 'Заполните это поле');
+                hasError = true;
+            }
+            
+            if (hasError) {
                 return;
             }
             
-            // Валидация: проверяем, что введен телефон или email
-            const phoneRegex = /^(\+7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            
-            if (!phoneRegex.test(login.replace(/\s/g, '')) && !emailRegex.test(login)) {
-                alert('Пожалуйста, введите корректный телефон (+7XXXXXXXXXX) или email');
-                return;
+            try {
+                const result = await loginUserAPI(login, password);
+                localStorage.setItem('token', result.token);
+                localStorage.setItem('user', JSON.stringify(result.user));
+                showNotification('Вход выполнен успешно!', 'success');
+                closeLoginModal();
+                loginUser();
+                // Загружаем данные профиля
+                loadUserProfile();
+            } catch (error) {
+                showError('auth-login', 'Неверный логин или пароль');
+                showNotification('Неверный логин или пароль', 'error');
             }
-            
-            // Здесь должна быть логика авторизации
-            console.log('Попытка входа с:', login);
-            alert('Вход выполнен успешно!');
-            closeLoginModal();
         }
         
-        function handleRegister() {
+        async function handleRegister() {
             const firstName = document.getElementById('reg-firstName').value;
             const lastName = document.getElementById('reg-lastName').value;
             const email = document.getElementById('reg-email').value;
@@ -2707,50 +3508,233 @@
             const confirmPassword = document.getElementById('reg-confirmPassword').value;
             const agreeTerms = document.getElementById('reg-agreeTerms').checked;
             
-            if (!firstName || !lastName || !email || !phone || !password || !confirmPassword) {
-                alert('Пожалуйста, заполните все обязательные поля');
-                return;
+            clearAllErrors();
+            
+            let hasError = false;
+            
+            if (!firstName) {
+                showError('reg-firstName', 'Заполните это поле');
+                hasError = true;
             }
             
-            if (password !== confirmPassword) {
-                alert('Пароли не совпадают');
-                return;
+            if (!lastName) {
+                showError('reg-lastName', 'Заполните это поле');
+                hasError = true;
+            }
+            
+            if (!email) {
+                showError('reg-email', 'Заполните это поле');
+                hasError = true;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError('reg-email', 'Введите корректный email');
+                hasError = true;
+            }
+            
+            if (!phone) {
+                showError('reg-phone', 'Заполните это поле');
+                hasError = true;
+            }
+            
+            if (!password) {
+                showError('reg-password', 'Заполните это поле');
+                hasError = true;
+            } else if (password.length < 6) {
+                showError('reg-password', 'Пароль должен содержать не менее 6 символов');
+                hasError = true;
+            }
+            
+            if (!confirmPassword) {
+                showError('reg-confirmPassword', 'Заполните это поле');
+                hasError = true;
+            } else if (password !== confirmPassword) {
+                showError('reg-confirmPassword', 'Пароли не совпадают');
+                hasError = true;
             }
             
             if (!agreeTerms) {
-                alert('Необходимо согласиться с условиями использования');
+                showNotification('Необходимо согласиться с условиями использования', 'warning');
                 return;
             }
             
-            // Здесь должна быть логика регистрации
-            alert('Регистрация выполнена успешно!');
-            closeRegisterModal();
+            if (hasError) {
+                return;
+            }
+            
+            try {
+                const userData = {
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    password
+                };
+                
+                await registerUserAPI(userData);
+                showNotification('Регистрация успешна! Проверьте вашу почту или телефон для подтверждения.', 'success');
+                closeRegisterModal();
+                openConfirmRegisterCodeModal();
+            } catch (error) {
+                showNotification(`Ошибка регистрации: ${error.message}`, 'error');
+            }
         }
         
-        function handleOrderSubmit(event) {
+        // Обновленная функция handleOrderSubmit с валидацией и API запросом
+        async function handleOrderSubmit(event) {
             event.preventDefault();
             
-            // Здесь должна быть логика отправки заказа
-            alert('Заказ успешно оформлен! Наш менеджер свяжется с вами в течение 30 минут.');
-            showPage('main');
+            clearAllOrderErrors();
+            
+            const senderName = document.getElementById('sender-name').value;
+            const senderPhone = document.getElementById('sender-phone').value;
+            const senderEmail = document.getElementById('sender-email').value;
+            const cargoDescription = document.getElementById('cargo-description').value;
+            const productCategory = document.getElementById('product-category').value;
+            const cargoWeight = document.getElementById('cargo-weight').value;
+            const cargoVolume = document.getElementById('cargo-volume').value;
+            const cargoType = document.getElementById('cargo-type').value;
+            const shippingDate = document.getElementById('shipping-date').value;
+            const pickupAddress = document.getElementById('pickup-address').value;
+            const deliveryAddress = document.getElementById('delivery-address').value;
+            const insurance = document.getElementById('insurance').checked;
+            const packaging = document.getElementById('packaging').checked;
+            const tracking = document.getElementById('tracking').checked;
+            const comments = document.getElementById('comments').value;
+            
+            let hasError = false;
+            
+            if (!senderName) {
+                showOrderError('sender-name', 'Заполните это поле');
+                hasError = true;
+            }
+            
+            if (!senderPhone) {
+                showOrderError('sender-phone', 'Заполните это поле');
+                hasError = true;
+            }
+            
+            if (!cargoDescription) {
+                showOrderError('cargo-description', 'Заполните это поле');
+                hasError = true;
+            }
+            
+            if (!productCategory) {
+                showOrderError('product-category', 'Выберите категорию товара');
+                hasError = true;
+            }
+            
+            if (!cargoWeight || parseFloat(cargoWeight) <= 0) {
+                showOrderError('cargo-weight', 'Введите корректный вес');
+                hasError = true;
+            }
+            
+            if (!cargoVolume || parseFloat(cargoVolume) <= 0) {
+                showOrderError('cargo-volume', 'Введите корректный объем');
+                hasError = true;
+            }
+            
+            if (!cargoType) {
+                showOrderError('cargo-type', 'Выберите тип груза');
+                hasError = true;
+            }
+            
+            if (!shippingDate) {
+                showOrderError('shipping-date', 'Выберите дату отправки');
+                hasError = true;
+            }
+            
+            if (!pickupAddress) {
+                showOrderError('pickup-address', 'Заполните это поле');
+                hasError = true;
+            }
+            
+            if (!deliveryAddress) {
+                showOrderError('delivery-address', 'Заполните это поле');
+                hasError = true;
+            }
+            
+            if (hasError) {
+                showNotification('Пожалуйста, заполните все обязательные поля корректно', 'warning');
+                return false;
+            }
+            
+            const orderData = {
+                senderName,
+                senderPhone,
+                senderEmail,
+                cargoDescription,
+                productCategory,
+                cargoWeight: parseFloat(cargoWeight),
+                cargoVolume: parseFloat(cargoVolume),
+                cargoType,
+                shippingDate,
+                pickupAddress,
+                deliveryAddress,
+                insurance,
+                packaging,
+                tracking,
+                comments
+            };
+            
+            const token = localStorage.getItem('token');
+            
+            try {
+                await createOrderAPI(orderData, token);
+                showNotification('Заказ успешно оформлен! Наш менеджер свяжется с вами в течение 30 минут.', 'success');
+                
+                // Сбрасываем форму
+                document.getElementById('orderForm').reset();
+                
+                // Показываем главную страницу
+                showPage('main');
+            } catch (error) {
+                showNotification(`Ошибка оформления заказа: ${error.message}`, 'error');
+            }
             
             return false;
         }
         
-        function handleContactSubmit(event) {
+        async function handleContactSubmit(event) {
             event.preventDefault();
             
-            // Здесь должна быть логика отправки контактной формы
-            alert('Сообщение успешно отправлено! Мы ответим вам в ближайшее время.');
-            document.getElementById('contactForm').reset();
+            const contactData = {
+                name: document.getElementById('contact-name').value,
+                email: document.getElementById('contact-email').value,
+                phone: document.getElementById('contact-phone').value,
+                message: document.getElementById('contact-message').value
+            };
+            
+            try {
+                await sendContactMessageAPI(contactData);
+                showNotification('Сообщение успешно отправлено! Мы ответим вам в ближайшее время.', 'success');
+                document.getElementById('contactForm').reset();
+            } catch (error) {
+                showNotification(`Ошибка отправки сообщения: ${error.message}`, 'error');
+            }
             
             return false;
         }
         
-        // Функции для страницы "Мои заказы"
+        // Функция для загрузки профиля пользователя
+        async function loadUserProfile() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            
+            try {
+                const profile = await getProfileAPI(token);
+                document.getElementById('profile-first-name').value = profile.firstName || '';
+                document.getElementById('profile-last-name').value = profile.lastName || '';
+                document.getElementById('profile-email').value = profile.email || '';
+                document.getElementById('profile-phone').value = profile.phone || '';
+                document.getElementById('profile-address').value = profile.address || '';
+            } catch (error) {
+                console.error('Ошибка загрузки профиля:', error);
+            }
+        }
+        
+        // Функции для страницы "Мои заказы" в профиле
         function toggleOrdersVisibility(hasOrders) {
-            const ordersTable = document.getElementById('orders-table');
-            const noOrdersMessage = document.getElementById('no-orders-message');
+            const ordersTable = document.getElementById('profile-orders-table');
+            const noOrdersMessage = document.getElementById('profile-no-orders-message');
             
             if (hasOrders) {
                 if (ordersTable) ordersTable.style.display = 'block';
@@ -2760,137 +3744,20 @@
                 if (noOrdersMessage) noOrdersMessage.style.display = 'block';
             }
         }
-
-        function resetFilters() {
-            document.getElementById('status-filter').value = 'Все заказы';
-            document.getElementById('period-filter').value = 'Все время';
-            document.getElementById('search-input').value = '';
-            
-            // Здесь можно добавить логику фильтрации заказов
-            console.log('Фильтры сброшены');
-            
-            // Фильтруем заказы после сброса
-            filterOrders();
-        }
-
+        
         function viewOrder(orderId) {
-            // Логика просмотра деталей заказа
-            alert(`Просмотр заказа ${orderId}`);
-            // В реальном приложении здесь можно открыть модальное окно с деталями
+            showNotification(`Просмотр заказа ${orderId}`, 'info');
+            // В реальном приложении здесь будет переход на страницу деталей заказа
         }
-
+        
         function trackOrder(orderId) {
-            // Логика отслеживания заказа
-            alert(`Отслеживание заказа ${orderId}`);
-            // В реальном приложении здесь можно открыть страницу отслеживания
-        }
-        
-        // Функция обновления статистики заказов
-        function updateOrderStats() {
-            const orderRows = document.querySelectorAll('.order-row');
-            const visibleRows = Array.from(orderRows).filter(row => row.style.display !== 'none');
-            
-            let totalOrders = 0;
-            let processingOrders = 0;
-            let inTransitOrders = 0;
-            let deliveredOrders = 0;
-            
-            visibleRows.forEach(row => {
-                totalOrders++;
-                const statusElement = row.querySelector('.order-status');
-                
-                if (statusElement) {
-                    if (statusElement.classList.contains('new') || statusElement.classList.contains('processing') || statusElement.classList.contains('confirmed')) {
-                        processingOrders++;
-                    } else if (statusElement.classList.contains('in-transit')) {
-                        inTransitOrders++;
-                    } else if (statusElement.classList.contains('delivered')) {
-                        deliveredOrders++;
-                    }
-                }
-            });
-            
-            // Обновляем статистику
-            document.getElementById('total-orders-count').textContent = totalOrders;
-            document.getElementById('processing-orders-count').textContent = processingOrders;
-            document.getElementById('in-transit-orders-count').textContent = inTransitOrders;
-            document.getElementById('delivered-orders-count').textContent = deliveredOrders;
-        }
-        
-        // Функция фильтрации заказов
-        function filterOrders() {
-            const status = document.getElementById('status-filter').value;
-            const period = document.getElementById('period-filter').value;
-            const search = document.getElementById('search-input').value.toLowerCase();
-            
-            console.log('Фильтрация по:', { status, period, search });
-            
-            // Получаем все строки заказов
-            const orderRows = document.querySelectorAll('.order-row');
-            let visibleCount = 0;
-            
-            orderRows.forEach(row => {
-                let shouldShow = true;
-                
-                // Фильтрация по статусу
-                if (status !== 'Все заказы') {
-                    const statusElement = row.querySelector('.order-status');
-                    if (statusElement) {
-                        const rowStatus = statusElement.textContent.trim().toLowerCase();
-                        const filterStatus = status.toLowerCase();
-                        
-                        // Проверяем соответствие статуса
-                        if (!rowStatus.includes(filterStatus)) {
-                            shouldShow = false;
-                        }
-                    }
-                }
-                
-                // Фильтрация по поиску
-                if (search) {
-                    const orderId = row.querySelector('.order-id-text').textContent.toLowerCase();
-                    const fromAddress = row.querySelector('.order-from .address-line:nth-child(1)').textContent.toLowerCase() + 
-                                      ' ' + row.querySelector('.order-from .address-line:nth-child(2)').textContent.toLowerCase();
-                    const toAddress = row.querySelector('.order-to .address-line:nth-child(1)').textContent.toLowerCase() + 
-                                    ' ' + row.querySelector('.order-to .address-line:nth-child(2)').textContent.toLowerCase();
-                    const cargo = row.querySelector('.cargo-text').textContent.toLowerCase();
-                    
-                    if (!orderId.includes(search) && 
-                        !fromAddress.includes(search) && 
-                        !toAddress.includes(search) && 
-                        !cargo.includes(search)) {
-                        shouldShow = false;
-                    }
-                }
-                
-                // Применяем фильтр
-                if (shouldShow) {
-                    row.style.display = 'grid';
-                    visibleCount++;
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-            
-            // Показываем/скрываем сообщение об отсутствии заказов
-            const ordersTable = document.getElementById('orders-table');
-            const noOrdersMessage = document.getElementById('no-orders-message');
-            
-            if (visibleCount > 0) {
-                if (ordersTable) ordersTable.style.display = 'block';
-                if (noOrdersMessage) noOrdersMessage.style.display = 'none';
-            } else {
-                if (ordersTable) ordersTable.style.display = 'none';
-                if (noOrdersMessage) noOrdersMessage.style.display = 'block';
-            }
-            
-            // Обновляем статистику
-            updateOrderStats();
+            showNotification(`Отслеживание заказа ${orderId}`, 'info');
+            // В реальном приложении здесь будет переход на страницу отслеживания
         }
         
         // Закрытие модальных окон при клике вне их
         document.addEventListener('click', function(event) {
-            const modals = ['loginModal', 'registerModal', 'forgotPasswordModal', 'confirmCodeModal'];
+            const modals = ['loginModal', 'registerModal', 'forgotPasswordModal', 'confirmCodeModal', 'confirmRegisterCodeModal'];
             
             modals.forEach(modalId => {
                 const modal = document.getElementById(modalId);
@@ -2899,6 +3766,7 @@
                     if (modalId === 'registerModal') closeRegisterModal();
                     if (modalId === 'forgotPasswordModal') closeForgotPasswordModal();
                     if (modalId === 'confirmCodeModal') closeConfirmCodeModal();
+                    if (modalId === 'confirmRegisterCodeModal') closeConfirmRegisterCodeModal();
                 }
             });
         });
@@ -2910,6 +3778,7 @@
                 closeRegisterModal();
                 closeForgotPasswordModal();
                 closeConfirmCodeModal();
+                closeConfirmRegisterCodeModal();
             }
         });
         
@@ -2920,6 +3789,13 @@
             const shippingDate = document.getElementById('shipping-date');
             if (shippingDate) {
                 shippingDate.min = today;
+            }
+            
+            // Проверяем авторизацию при загрузке
+            const token = localStorage.getItem('token');
+            if (token) {
+                loginUser();
+                loadUserProfile();
             }
             
             // Назначить обработчики событий для форм
@@ -2987,50 +3863,84 @@
                 resendLink.addEventListener('click', resendCode);
             }
             
-            // Инициализация фильтров для страницы "Мои заказы"
-            const statusFilter = document.getElementById('status-filter');
-            const periodFilter = document.getElementById('period-filter');
-            const searchInput = document.getElementById('search-input');
-            
-            if (statusFilter) {
-                statusFilter.addEventListener('change', filterOrders);
+            // Обработчик для кнопки подтверждения регистрации
+            const verifyRegisterBtn = document.querySelector('#confirmRegisterCodeModal .continue-btn');
+            if (verifyRegisterBtn) {
+                verifyRegisterBtn.addEventListener('click', verifyRegisterCode);
             }
             
-            if (periodFilter) {
-                periodFilter.addEventListener('change', filterOrders);
+            // Обработчик для кнопки "Назад" в окне подтверждения регистрации
+            const backRegisterBtn = document.querySelector('#confirmRegisterCodeModal .back-btn');
+            if (backRegisterBtn) {
+                backRegisterBtn.addEventListener('click', backToRegister);
             }
             
-            if (searchInput) {
-                searchInput.addEventListener('input', filterOrders);
+            // Обработчик для кнопки повторной отправки кода в регистрации
+            const resendRegisterLink = document.querySelector('#confirmRegisterCodeModal .resend-code a');
+            if (resendRegisterLink) {
+                resendRegisterLink.addEventListener('click', resendRegisterCode);
             }
             
-            // Добавляем data-атрибуты для мобильной версии таблицы заказов
-            const orderRows = document.querySelectorAll('.order-row');
-            orderRows.forEach(row => {
-                const idCell = row.querySelector('.order-id');
-                const dateCell = row.querySelector('.order-date');
-                const fromCell = row.querySelector('.order-from');
-                const toCell = row.querySelector('.order-to');
-                const cargoCell = row.querySelector('.order-cargo');
-                const statusCell = row.querySelector('.order-status-cell');
-                const priceCell = row.querySelector('.order-price-cell');
-                const actionsCell = row.querySelector('.order-actions-cell');
-                
-                if (idCell) idCell.setAttribute('data-label', '№ ЗАКАЗА');
-                if (dateCell) dateCell.setAttribute('data-label', 'ДАТА');
-                if (fromCell) fromCell.setAttribute('data-label', 'ОТ');
-                if (toCell) toCell.setAttribute('data-label', 'ДО');
-                if (cargoCell) cargoCell.setAttribute('data-label', 'ГРУЗ');
-                if (statusCell) statusCell.setAttribute('data-label', 'СТАТУС');
-                if (priceCell) priceCell.setAttribute('data-label', 'ЦЕНА');
-                if (actionsCell) actionsCell.setAttribute('data-label', 'ДЕЙСТВИЯ');
-            });
+            // Инициализация фильтров для страницы профиля
+            const profileStatusFilter = document.getElementById('profile-status-filter');
+            const profilePeriodFilter = document.getElementById('profile-period-filter');
+            const profileSearchInput = document.getElementById('profile-search-input');
             
-            // По умолчанию показываем заказы и обновляем статистику
-            toggleOrdersVisibility(true);
-            updateOrderStats();
-            filterOrders();
+            if (profileStatusFilter) {
+                profileStatusFilter.addEventListener('change', filterProfileOrders);
+            }
+            
+            if (profilePeriodFilter) {
+                profilePeriodFilter.addEventListener('change', filterProfileOrders);
+            }
+            
+            if (profileSearchInput) {
+                profileSearchInput.addEventListener('input', filterProfileOrders);
+            }
+            
+            // По умолчанию показываем сообщение об отсутствии заказов
+            toggleOrdersVisibility(false);
+            if (token) {
+                updateProfileOrderStats();
+            }
         });
+        
+        // Функция фильтрации заказов в профиле
+        async function filterProfileOrders() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            
+            const status = document.getElementById('profile-status-filter').value;
+            const period = document.getElementById('profile-period-filter').value;
+            const search = document.getElementById('profile-search-input').value;
+            
+            const filters = {};
+            
+            if (status && status !== 'Все заказы') {
+                filters.status = status.toLowerCase();
+            }
+            
+            if (period && period !== 'Все время') {
+                filters.period = period;
+            }
+            
+            if (search) {
+                filters.search = search;
+            }
+            
+            try {
+                const orders = await getUserOrdersAPI(token, filters);
+                if (orders && orders.length > 0) {
+                    displayUserOrders(orders);
+                    toggleOrdersVisibility(true);
+                } else {
+                    toggleOrdersVisibility(false);
+                }
+            } catch (error) {
+                console.error('Ошибка фильтрации заказов:', error);
+                toggleOrdersVisibility(false);
+            }
+        }
     </script>
 </body>
 </html>
