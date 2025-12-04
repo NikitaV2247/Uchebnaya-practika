@@ -2425,6 +2425,11 @@
                             <input type="text" id="delivery-address" placeholder="Москва, ул. Арбат, д. 5" required>
                             <div class="order-error-message" id="delivery-address-error"></div>
                         </div>
+
+                        <!-- Скрытое поле для расстояния -->
+                        <div class="order-form-group" style="display: none;">
+                            <input type="hidden" id="distance-km" value="0">
+                        </div>
                     </div>
                     
                     <!-- Дополнительные услуги -->
@@ -2711,6 +2716,116 @@
         
         // Заказы (имитация базы данных)
         let orders = JSON.parse(localStorage.getItem('transportco_orders')) || [];
+
+        // База расстояний между городами (в км)
+        const cityDistances = {
+            // Центральный регион
+            'Москва': {
+                'Санкт-Петербург': 714,
+                'Кострома': 346,
+                'Ярославль': 274,
+                'Владимир': 194,
+                'Казань': 807,
+                'Нижний Новгород': 416,
+                'Екатеринбург': 1745,
+                'Новосибирск': 3350,
+                'Сочи': 1584
+            },
+            'Санкт-Петербург': {
+                'Москва': 710,
+                'Кострома': 860,
+                'Ярославль': 800,
+                'Великий Новгород': 180,
+                'Псков': 280,
+                'Мурманск': 1400
+            },
+            'Кострома': {
+                'Москва': 340,
+                'Санкт-Петербург': 860,
+                'Ярославль': 85,
+                'Иваново': 110,
+                'Нижний Новгород': 330,
+                'Вологда': 220
+            },
+            'Ярославль': {
+                'Москва': 280,
+                'Санкт-Петербург': 800,
+                'Кострома': 85,
+                'Вологда': 200,
+                'Рыбинск': 75
+            }
+        };
+
+        // Функция для расчета расстояния между городами
+        function calculateDistance(city1, city2) {
+            if (!city1 || !city2) return 100; // Значение по умолчанию
+            
+            const normalizedCity1 = normalizeCityName(city1);
+            const normalizedCity2 = normalizeCityName(city2);
+            
+            if (normalizedCity1 === normalizedCity2) {
+                return 10; // Внутри города
+            }
+            
+            // Проверяем в обе стороны
+            if (cityDistances[normalizedCity1] && cityDistances[normalizedCity1][normalizedCity2]) {
+                return cityDistances[normalizedCity1][normalizedCity2];
+            }
+            
+            if (cityDistances[normalizedCity2] && cityDistances[normalizedCity2][normalizedCity1]) {
+                return cityDistances[normalizedCity2][normalizedCity1];
+            }
+            
+            // Если города не найдены в базе, используем эмпирическую формулу
+            return calculateEstimatedDistance(normalizedCity1, normalizedCity2);
+        }
+
+        // Функция для нормализации названия города
+        function normalizeCityName(city) {
+            if (!city) return '';
+            
+            // Удаляем лишние пробелы, приводим к нижнему регистру
+            const normalized = city.trim().toLowerCase();
+            
+            // Ищем соответствие в базе городов
+            const knownCities = Object.keys(cityDistances);
+            const found = knownCities.find(knownCity => 
+                knownCity.toLowerCase().includes(normalized) || 
+                normalized.includes(knownCity.toLowerCase())
+            );
+            
+            return found || city.trim();
+        }
+
+        // Эмпирическая формула для расчета расстояния
+        function calculateEstimatedDistance(city1, city2) {
+            // Простой эвристический расчет на основе первых букв
+            // В реальном проекте здесь должен быть API расчета расстояний
+            const baseDistance = 500; // Среднее расстояние по умолчанию
+            
+            // Простая эвристика: если города из одного региона
+            const russianRegions = {
+                'москва': 'центральный',
+                'кострома': 'центральный', 
+                'ярославль': 'центральный',
+                'санкт-петербург': 'северо-западный',
+                'новгород': 'северо-западный',
+                'казань': 'приволжский',
+                'нижний новгород': 'приволжский',
+                'екатеринбург': 'уральский',
+                'новосибирск': 'сибирский',
+                'сочи': 'южный'
+            };
+            
+            const region1 = russianRegions[city1.toLowerCase()] || 'центральный';
+            const region2 = russianRegions[city2.toLowerCase()] || 'центральный';
+            
+            if (region1 === region2) {
+                return Math.floor(Math.random() * 300) + 100; // 100-400 км в одном регионе
+            } else {
+                return Math.floor(Math.random() * 1500) + 500; // 500-2000 км между регионами
+            }
+        }
         
         // Временные данные для регистрации
         let tempRegistrationData = null;
