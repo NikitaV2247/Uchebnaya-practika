@@ -1379,11 +1379,12 @@
             border: 1px solid #e0e0e0;
             margin-bottom: 40px;
             display: none;
+            overflow-x: auto;
         }
 
         .table-header {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr 1.5fr;
+            grid-template-columns: 100px 120px 170px 170px 170px 170px 200px 170px 170px 220px;
             background: #f8f9fa;
             padding: 15px 20px;
             border-bottom: 1px solid #e0e0e0;
@@ -1392,16 +1393,18 @@
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            width: max-content;
         }
 
         .table-header-item {
             padding: 0 10px;
             text-align: left;
+            white-space: nowrap;
         }
 
         .order-row {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr 1.5fr;
+            grid-template-columns: 100px 120px 170px 170px 170px 170px 200px 170px 170px 220px;
             padding: 20px 20px;
             border-bottom: 1px solid #f0f0f0;
             align-items: center;
@@ -1643,15 +1646,15 @@
         /* Адаптивность */
         @media (max-width: 1200px) {
             .table-header {
-                grid-template-columns: 1fr 1fr 1fr 1.2fr 1.2fr 0.8fr 0.8fr 0.8fr 1.2fr;
+                grid-template-columns: 100px 120px 170px 170px 170px 170px 200px 170px 170px 220px;
             }
             
             .order-row {
-                grid-template-columns: 1fr 1fr 1fr 1.2fr 1.2fr 0.8fr 0.8fr 0.8fr 1.2fr;
+                grid-template-columns: 100px 120px 170px 170px 170px 170px 200px 170px 170px 220px;
             }
         }
         
-        @media (max-width: 1024px) {
+       @media (max-width: 1024px) {
             .filter-row {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -1672,24 +1675,26 @@
             .table-header-item:nth-child(5),
             .table-header-item:nth-child(6),
             .table-header-item:nth-child(7),
-            .table-header-item:nth-child(8)
-            .table-header-item:nth-child(9) {
+            .table-header-item:nth-child(8),
+            .table-header-item:nth-child(9),
+            .table-header-item:nth-child(10) {
                 display: none;
             }
             
-            .order-shiping-date,
+            .order-shipping-date-cell,
             .order-cargo,
+            .order-category-cell,
             .order-status-cell,
             .order-price-cell,
             .order-actions-cell {
                 display: none;
             }
-            
+
             /* Для планшетов делаем кнопки в строку */
             .order-buttons {
                 flex-direction: row;
             }
-            
+                
             .view-btn, .track-btn {
                 width: auto;
                 min-width: 100px;
@@ -1836,6 +1841,12 @@
                 text-align: center;
                 padding: 10px;
                 font-size: 14px;
+            }
+
+            /* Показываем все ячейки для мобильной версии */
+            .order-shipping-date-cell,
+            .order-category-cell {
+                display: flex;
             }
         }
         
@@ -2267,6 +2278,7 @@
                                 <div class="table-header-item">АДРЕС ОТПРАВЛЕНИЯ</div>
                                 <div class="table-header-item">АДРЕС ДОСТАВКИ</div>
                                 <div class="table-header-item">ГРУЗ</div>
+                                <div class="table-header-item">КАТЕГОРИЯ</div>
                                 <div class="table-header-item">СТАТУС</div>
                                 <div class="table-header-item">ЦЕНА</div>
                                 <div class="table-header-item">ДЕЙСТВИЯ</div>
@@ -2878,34 +2890,37 @@
                 const statusText = getStatusText(order.status);
                 
                 row.innerHTML = `
-                    <div class="order-cell order-id">
+                    <div class="order-cell order-id" data-label="№ заказа">
                         <span class="order-id-text">#${index + 1}</span>
                     </div>
-                    <div class="order-cell date-container">
+                    <div class="order-cell date-container" data-label="Дата заявки">
                         <span class="date-day">${formattedDate}</span>
                     </div>
-                    <div class="order-cell date-container order-shipping-date" data-label="Дата отправления">
+                    <div class="order-cell date-container order-shipping-date-cell" data-label="Дата отправки">
                         <span class="date-day">${formattedShippingDate}</span>
                     </div>
-                    <div class="order-cell address-container">
+                    <div class="order-cell address-container" data-label="Адрес отправления">
                         <span class="address-line">${order.pickupAddress || 'Не указан'}</span>
                     </div>
-                    <div class="order-cell address-container">
+                    <div class="order-cell address-container" data-label="Адрес доставки">
                         <span class="address-line">${order.deliveryAddress || 'Не указан'}</span>
                     </div>
-                    <div class="order-cell">
+                    <div class="order-cell" data-label="Груз">
                         <span class="cargo-text">${order.cargoDescription || 'Не указан'}</span>
                     </div>
-                    <div class="order-cell order-status-cell">
+                    <div class="order-cell order-category-cell" data-label="Категория">
+                        <span>${getCategoryName(order.productCategory) || 'Не указана'}</span>
+                    </div>
+                    <div class="order-cell order-status-cell" data-label="Статус">
                         <div class="order-status ${statusClass}">
                             <span class="status-icon">●</span>
                             <span>${statusText}</span>
                         </div>
                     </div>
-                    <div class="order-cell order-price-cell">
+                    <div class="order-cell order-price-cell" data-label="Цена">
                         <span class="order-price">${order.price ? `${order.price} ₽` : 'Рассчитывается'}</span>
                     </div>
-                    <div class="order-cell order-actions-cell">
+                    <div class="order-cell order-actions-cell" data-label="Действия">
                         <div class="actions-container">
                             <div class="order-buttons">
                                 <button class="view-btn" onclick="viewOrder('${order.id}')">Подробнее</button>
@@ -2947,6 +2962,23 @@
             };
             return statusTextMap[status] || 'В обработке';
         }
+
+        // Функция для получения читаемого названия категории
+        function getCategoryName(categoryCode) {
+        const categoryMap = {
+            'electronics': 'Электроника',
+            'clothing': 'Одежда и обувь',
+            'furniture': 'Мебель',
+            'food': 'Продукты питания',
+            'building': 'Стройматериалы',
+            'auto': 'Автозапчасти',
+            'industrial': 'Оборудование',
+            'chemicals': 'Химические вещества',
+            'documents': 'Документы',
+            'other': 'Другое'
+        }
+    return categoryMap[categoryCode] || categoryCode;
+}
         
         // Функция сброса фильтров в профиле
         function resetProfileFilters() {
