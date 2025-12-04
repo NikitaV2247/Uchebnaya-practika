@@ -1913,7 +1913,6 @@
                 <a onclick="showPage('main')" class="active">Главная</a>
                 <a onclick="showPage('about')">О компании</a>
                 <a onclick="showPage('contacts')">Контакты</a>
-                <a onclick="showPage('profile')">Профиль</a>
             </nav>
             <div class="auth-buttons">
                 <div id="unauth-buttons" style="display: flex; gap: 10px;">
@@ -2107,31 +2106,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="lower-section">
-                    <div class="contact-form">
-                        <h2>Напишите нам</h2>
-                        <form id="contactForm" onsubmit="handleContactSubmit(event)">
-                            <div class="form-group">
-                                <label for="contact-name">Ваше имя</label>
-                                <input type="text" id="contact-name" placeholder="Иван Иванов" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="contact-email">Email</label>
-                                <input type="email" id="contact-email" placeholder="your@email.com" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="contact-phone">Телефон</label>
-                                <input type="tel" id="contact-phone" placeholder="+7 (812) 156-43-89">
-                            </div>
-                            <div class="form-group">
-                                <label for="contact-message">Сообщение</label>
-                                <textarea id="contact-message" placeholder="Ваше сообщение..." rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="contact-submit-btn">Отправить</button>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -2229,8 +2203,7 @@
                                     <label for="profile-status-filter">Статус:</label>
                                     <select id="profile-status-filter">
                                         <option>Все заказы</option>
-                                        <option>Новый</option>
-                                        <option>Подтвержден</option>
+                                        <option>В обработке</option>
                                         <option>В пути</option>
                                         <option>Доставлен</option>
                                         <option>Отменен</option>
@@ -2704,6 +2677,31 @@
     </div>
 
     <script>
+        // Локальное хранилище для пользователей (имитация базы данных)
+        let users = JSON.parse(localStorage.getItem('transportco_users')) || [
+            {
+                id: 1,
+                email: "test@example.com",
+                phone: "+79123456789",
+                password: "password123",
+                firstName: "Иван",
+                lastName: "Иванов",
+                verified: true
+            }
+        ];
+        
+        // Текущий пользователь
+        let currentUser = JSON.parse(localStorage.getItem('transportco_currentUser')) || null;
+        
+        // Заказы (имитация базы данных)
+        let orders = JSON.parse(localStorage.getItem('transportco_orders')) || [];
+        
+        // Временные данные для регистрации
+        let tempRegistrationData = null;
+        
+        // Переменная для запоминания страницы после авторизации
+        let pendingPageAfterLogin = null;
+
         // Система уведомлений
         function showNotification(message, type = 'info', duration = 5000) {
             const container = document.getElementById('notificationContainer');
@@ -2735,104 +2733,21 @@
             return notification;
         }
         
-        // API конфигурация
-        const API_BASE_URL = 'http://localhost:3000/api';
-        
-        // Общие функции для работы с API
-        async function apiRequest(endpoint, method = 'GET', data = null, token = null) {
-            const url = `${API_BASE_URL}${endpoint}`;
-            const headers = {
-                'Content-Type': 'application/json',
-            };
-            
-            if (token) {
-                headers['Authorization'] = `Bearer ${token}`;
-            }
-            
-            const options = {
-                method,
-                headers,
-            };
-            
-            if (data && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
-                options.body = JSON.stringify(data);
-            }
-            
-            try {
-                const response = await fetch(url, options);
-                
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
-                }
-                
-                return await response.json();
-            } catch (error) {
-                console.error('API request failed:', error);
-                showNotification(`Ошибка: ${error.message}`, 'error');
-                throw error;
-            }
-        }
-        
-        // Функции для работы с пользователем
-        async function loginUserAPI(login, password) {
-            return apiRequest('/auth/login', 'POST', { login, password });
-        }
-        
-        async function registerUserAPI(userData) {
-            return apiRequest('/auth/register', 'POST', userData);
-        }
-        
-        async function verifyPhoneAPI(phone, code) {
-            return apiRequest('/auth/verify-phone', 'POST', { phone, code });
-        }
-        
-        async function sendRecoveryCodeAPI(contact) {
-            return apiRequest('/auth/recovery-code', 'POST', { contact });
-        }
-        
-        async function resetPasswordAPI(contact, code, newPassword) {
-            return apiRequest('/auth/reset-password', 'POST', { contact, code, newPassword });
-        }
-        
-        // Функции для работы с заказами
-        async function createOrderAPI(orderData, token) {
-            return apiRequest('/orders', 'POST', orderData, token);
-        }
-        
-        async function getUserOrdersAPI(token, filters = {}) {
-            let endpoint = '/orders/user';
-            const queryParams = new URLSearchParams(filters).toString();
-            if (queryParams) {
-                endpoint += `?${queryParams}`;
-            }
-            return apiRequest(endpoint, 'GET', null, token);
-        }
-        
-        async function getOrderStatsAPI(token) {
-            return apiRequest('/orders/stats', 'GET', null, token);
-        }
-        
-        // Функции для работы с профилем
-        async function getProfileAPI(token) {
-            return apiRequest('/profile', 'GET', null, token);
-        }
-        
-        async function updateProfileAPI(profileData, token) {
-            return apiRequest('/profile', 'PUT', profileData, token);
-        }
-        
-        async function updatePasswordAPI(passwordData, token) {
-            return apiRequest('/profile/password', 'PUT', passwordData, token);
-        }
-        
-        // Функции для работы с контактами
-        async function sendContactMessageAPI(contactData) {
-            return apiRequest('/contact', 'POST', contactData);
-        }
-        
         // Функция для переключения страниц
         function showPage(pageId) {
+            // Проверяем авторизацию для доступа к профилю и заказу
+            if ((pageId === 'profile' || pageId === 'order') && !currentUser) {
+                if (pageId === 'order') {
+                    showNotification('Для оформления заказа необходимо войти в аккаунт', 'warning');
+                    pendingPageAfterLogin = 'order'; // Запоминаем, куда перейти после входа
+                } else {
+                    showNotification('Для доступа к профилю необходимо авторизоваться', 'warning');
+                    pendingPageAfterLogin = 'profile';
+                }
+                openLoginModal();
+                return;
+            }
+            
             // Скрыть все страницы
             const pages = document.querySelectorAll('.page-content');
             pages.forEach(page => {
@@ -2840,7 +2755,10 @@
             });
             
             // Показать выбранную страницу
-            document.getElementById(pageId + '-page').classList.add('active');
+            const pageElement = document.getElementById(pageId + '-page');
+            if (pageElement) {
+                pageElement.classList.add('active');
+            }
             
             // Обновить активную ссылку в навигации
             const navLinks = document.querySelectorAll('nav a');
@@ -2896,27 +2814,31 @@
         }
         
         // Функция обновления статистики заказов в профиле
-        async function updateProfileOrderStats() {
-            const token = localStorage.getItem('token');
-            if (!token) return;
+        function updateProfileOrderStats() {
+            if (!currentUser) return;
             
-            try {
-                const stats = await getOrderStatsAPI(token);
-                document.getElementById('profile-total-orders-count').textContent = stats.total || '0';
-                document.getElementById('profile-processing-orders-count').textContent = stats.processing || '0';
-                document.getElementById('profile-in-transit-orders-count').textContent = stats.inTransit || '0';
-                document.getElementById('profile-delivered-orders-count').textContent = stats.delivered || '0';
-                
-                // Загружаем заказы пользователя
-                const orders = await getUserOrdersAPI(token);
-                if (orders && orders.length > 0) {
-                    displayUserOrders(orders);
-                    toggleOrdersVisibility(true);
-                } else {
-                    toggleOrdersVisibility(false);
-                }
-            } catch (error) {
-                console.error('Ошибка при загрузке статистики заказов:', error);
+            // Фильтруем заказы текущего пользователя
+            const userOrders = orders.filter(order => order.userId === currentUser.id);
+            
+            // Обновляем статистику
+            document.getElementById('profile-total-orders-count').textContent = userOrders.length;
+            
+            // Статусы "new", "confirmed" и "processing" теперь все "В обработке"
+            const processingOrders = userOrders.filter(o => 
+                o.status === 'new' || 
+                o.status === 'confirmed' || 
+                o.status === 'processing'
+            ).length;
+            
+            document.getElementById('profile-processing-orders-count').textContent = processingOrders;
+            document.getElementById('profile-in-transit-orders-count').textContent = userOrders.filter(o => o.status === 'in_transit').length;
+            document.getElementById('profile-delivered-orders-count').textContent = userOrders.filter(o => o.status === 'delivered').length;
+            
+            // Загружаем заказы пользователя
+            if (userOrders.length > 0) {
+                displayUserOrders(userOrders);
+                toggleOrdersVisibility(true);
+            } else {
                 toggleOrdersVisibility(false);
             }
         }
@@ -2989,26 +2911,26 @@
         // Вспомогательные функции для статусов
         function getStatusClass(status) {
             const statusMap = {
-                'new': 'new',
-                'confirmed': 'confirmed',
+                'new': 'processing',
+                'confirmed': 'processing',
                 'processing': 'processing',
                 'in_transit': 'in-transit',
                 'delivered': 'delivered',
                 'cancelled': 'cancelled'
             };
-            return statusMap[status] || 'new';
+            return statusMap[status] || 'processing';
         }
         
         function getStatusText(status) {
             const statusTextMap = {
-                'new': 'Новый',
-                'confirmed': 'Подтвержден',
+                'new': 'В обработке',
+                'confirmed': 'В обработке',
                 'processing': 'В обработке',
                 'in_transit': 'В пути',
                 'delivered': 'Доставлен',
                 'cancelled': 'Отменен'
             };
-            return statusTextMap[status] || 'Новый';
+            return statusTextMap[status] || 'В обработке';
         }
         
         // Функция сброса фильтров в профиле
@@ -3019,12 +2941,85 @@
             updateProfileOrderStats();
         }
         
+        // Функция фильтрации заказов в профиле
+        function filterProfileOrders() {
+            if (!currentUser) return;
+            
+            const status = document.getElementById('profile-status-filter').value;
+            const period = document.getElementById('profile-period-filter').value;
+            const search = document.getElementById('profile-search-input').value.toLowerCase();
+            
+            // Фильтруем заказы пользователя
+            let filteredOrders = orders.filter(order => order.userId === currentUser.id);
+            
+            // Фильтр по статусу
+            if (status && status !== 'Все заказы') {
+                if (status === 'В обработке') {
+                    // Фильтруем и "new", и "confirmed", и "processing" как "В обработке"
+                    filteredOrders = filteredOrders.filter(order => 
+                        order.status === 'new' || 
+                        order.status === 'confirmed' || 
+                        order.status === 'processing'
+                    );
+                } else {
+                    const statusMap = {
+                        'В пути': 'in_transit',
+                        'Доставлен': 'delivered',
+                        'Отменен': 'cancelled'
+                    };
+                    filteredOrders = filteredOrders.filter(order => order.status === statusMap[status]);
+                }
+            }
+            
+            // Фильтр по периоду
+            if (period && period !== 'Все время') {
+                const now = new Date();
+                let startDate = new Date();
+                
+                switch(period) {
+                    case 'За неделю':
+                        startDate.setDate(now.getDate() - 7);
+                        break;
+                    case 'За месяц':
+                        startDate.setMonth(now.getMonth() - 1);
+                        break;
+                    case 'За 3 месяца':
+                        startDate.setMonth(now.getMonth() - 3);
+                        break;
+                    case 'За год':
+                        startDate.setFullYear(now.getFullYear() - 1);
+                        break;
+                }
+                
+                filteredOrders = filteredOrders.filter(order => {
+                    const orderDate = new Date(order.createdAt);
+                    return orderDate >= startDate;
+                });
+            }
+            
+            // Поиск
+            if (search) {
+                filteredOrders = filteredOrders.filter(order => 
+                    order.id.toString().includes(search) ||
+                    (order.pickupAddress && order.pickupAddress.toLowerCase().includes(search)) ||
+                    (order.deliveryAddress && order.deliveryAddress.toLowerCase().includes(search)) ||
+                    (order.cargoDescription && order.cargoDescription.toLowerCase().includes(search))
+                );
+            }
+            
+            if (filteredOrders.length > 0) {
+                displayUserOrders(filteredOrders);
+                toggleOrdersVisibility(true);
+            } else {
+                toggleOrdersVisibility(false);
+            }
+        }
+        
         // Обработчик формы профиля
-        async function handleProfileSubmit(event) {
+        function handleProfileSubmit(event) {
             event.preventDefault();
             
-            const token = localStorage.getItem('token');
-            if (!token) {
+            if (!currentUser) {
                 showNotification('Для изменения профиля необходимо авторизоваться', 'warning');
                 return false;
             }
@@ -3044,35 +3039,30 @@
                     return false;
                 }
                 
-                try {
-                    await updatePasswordAPI({
-                        currentPassword,
-                        newPassword
-                    }, token);
-                    showNotification('Пароль успешно изменен!', 'success');
-                    
-                    // Очищаем поля пароля
-                    document.getElementById('profile-current-password').value = '';
-                    document.getElementById('profile-new-password').value = '';
-                    document.getElementById('profile-confirm-password').value = '';
-                } catch (error) {
-                    showNotification(`Ошибка при смене пароля: ${error.message}`, 'error');
+                // Проверяем текущий пароль
+                if (currentPassword !== currentUser.password) {
+                    showNotification('Текущий пароль указан неверно', 'error');
                     return false;
                 }
+                
+                // Обновляем пароль пользователя
+                currentUser.password = newPassword;
+                const userIndex = users.findIndex(u => u.id === currentUser.id);
+                if (userIndex !== -1) {
+                    users[userIndex].password = newPassword;
+                    localStorage.setItem('transportco_users', JSON.stringify(users));
+                    localStorage.setItem('transportco_currentUser', JSON.stringify(currentUser));
+                }
+                
+                showNotification('Пароль успешно изменен!', 'success');
+                
+                // Очищаем поля пароля
+                document.getElementById('profile-current-password').value = '';
+                document.getElementById('profile-new-password').value = '';
+                document.getElementById('profile-confirm-password').value = '';
             }
             
-            // Обновление остальных данных профиля
-            const profileData = {
-                address: document.getElementById('profile-address').value
-            };
-            
-            try {
-                await updateProfileAPI(profileData, token);
-                showNotification('Изменения сохранены!', 'success');
-            } catch (error) {
-                showNotification(`Ошибка при сохранении профиля: ${error.message}`, 'error');
-            }
-            
+            showNotification('Изменения сохранены!', 'success');
             return false;
         }
         
@@ -3080,11 +3070,19 @@
         function loginUser() {
             document.getElementById('unauth-buttons').style.display = 'none';
             document.getElementById('auth-user-buttons').style.display = 'flex';
+            
+            // Обновляем данные профиля
+            if (currentUser) {
+                document.getElementById('profile-first-name').value = currentUser.firstName || '';
+                document.getElementById('profile-last-name').value = currentUser.lastName || '';
+                document.getElementById('profile-email').value = currentUser.email || '';
+                document.getElementById('profile-phone').value = currentUser.phone || '';
+            }
         }
         
-        async function logout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('transportco_currentUser');
             document.getElementById('unauth-buttons').style.display = 'flex';
             document.getElementById('auth-user-buttons').style.display = 'none';
             showPage('main');
@@ -3193,24 +3191,12 @@
                 return;
             }
             
-            const phone = document.getElementById('reg-phone').value;
-            if (!phone) {
-                showNotification('Пожалуйста, сначала заполните телефон', 'warning');
-                return;
-            }
-            
-            sendRecoveryCodeAPI(phone)
-                .then(() => {
-                    startRegisterTimer();
-                    showNotification('Код отправлен повторно!', 'success');
-                })
-                .catch(error => {
-                    showNotification(`Ошибка отправки кода: ${error.message}`, 'error');
-                });
+            showNotification('Код отправлен повторно!', 'success');
+            startRegisterTimer();
         }
         
         // Функция для проверки введенного кода при регистрации
-        async function verifyRegisterCode() {
+        function verifyRegisterCode() {
             const code1 = document.getElementById('reg-sms-code-1').value;
             const code2 = document.getElementById('reg-sms-code-2').value;
             const code3 = document.getElementById('reg-sms-code-3').value;
@@ -3223,15 +3209,43 @@
                 return;
             }
             
-            try {
-                const phone = document.getElementById('reg-phone').value;
-                await verifyPhoneAPI(phone, fullCode);
-                showNotification('Регистрация подтверждена! Вы успешно зарегистрировались.', 'success');
-                closeConfirmRegisterCodeModal();
-                loginUser();
-                loadUserProfile();
-            } catch (error) {
-                showNotification(`Ошибка подтверждения регистрации: ${error.message}`, 'error');
+            // Проверяем код (для демо используем "1234")
+            if (fullCode === "1234") {
+                // Регистрируем пользователя
+                if (tempRegistrationData) {
+                    const newUser = {
+                        id: users.length + 1,
+                        email: tempRegistrationData.email,
+                        phone: tempRegistrationData.phone,
+                        password: tempRegistrationData.password,
+                        firstName: tempRegistrationData.firstName,
+                        lastName: tempRegistrationData.lastName,
+                        verified: true
+                    };
+                    
+                    users.push(newUser);
+                    localStorage.setItem('transportco_users', JSON.stringify(users));
+                    
+                    // Авторизуем пользователя
+                    currentUser = newUser;
+                    localStorage.setItem('transportco_currentUser', JSON.stringify(currentUser));
+                    
+                    showNotification('Регистрация подтверждена! Вы успешно зарегистрировались.', 'success');
+                    closeConfirmRegisterCodeModal();
+                    loginUser();
+                    
+                    // Переход на запомненную страницу или профиль
+                    if (pendingPageAfterLogin) {
+                        showPage(pendingPageAfterLogin);
+                        pendingPageAfterLogin = null;
+                    } else {
+                        showPage('profile');
+                    }
+                } else {
+                    showNotification('Ошибка регистрации: данные не найдены', 'error');
+                }
+            } else {
+                showNotification('Неверный код подтверждения. Попробуйте еще раз.', 'error');
             }
         }
         
@@ -3266,7 +3280,7 @@
         }
         
         // Функция для отправки кода восстановления
-        async function sendRecoveryCode() {
+        function sendRecoveryCode() {
             const contact = document.getElementById('recovery-contact').value;
             
             if (!contact) {
@@ -3274,13 +3288,16 @@
                 return;
             }
             
-            try {
-                await sendRecoveryCodeAPI(contact);
-                closeForgotPasswordModal();
-                openConfirmCodeModal();
-            } catch (error) {
-                showNotification(`Ошибка отправки кода: ${error.message}`, 'error');
+            // Проверяем, существует ли пользователь
+            const user = users.find(u => u.email === contact || u.phone === contact);
+            if (!user) {
+                showNotification('Пользователь с указанными данными не найден', 'error');
+                return;
             }
+            
+            showNotification('Код восстановления отправлен!', 'success');
+            closeForgotPasswordModal();
+            openConfirmCodeModal();
         }
         
         // Функция для перемещения между полями ввода кода
@@ -3336,19 +3353,12 @@
                 return;
             }
             
-            const contact = document.getElementById('recovery-contact').value;
-            sendRecoveryCodeAPI(contact)
-                .then(() => {
-                    startTimer();
-                    showNotification('Код отправлен повторно!', 'success');
-                })
-                .catch(error => {
-                    showNotification(`Ошибка отправки кода: ${error.message}`, 'error');
-                });
+            showNotification('Код отправлен повторно!', 'success');
+            startTimer();
         }
         
         // Функция для проверки введенного кода
-        async function verifyCode() {
+        function verifyCode() {
             const code1 = document.getElementById('sms-code-1').value;
             const code2 = document.getElementById('sms-code-2').value;
             const code3 = document.getElementById('sms-code-3').value;
@@ -3363,21 +3373,36 @@
             
             const contact = document.getElementById('recovery-contact').value;
             
-            // Вместо prompt используем модальное окно или форму для ввода пароля
-            // Для простоты пока оставим так
-            const newPassword = prompt('Введите новый пароль:');
-            
-            if (!newPassword || newPassword.length < 6) {
-                showNotification('Пароль должен содержать не менее 6 символов', 'error');
-                return;
-            }
-            
-            try {
-                await resetPasswordAPI(contact, fullCode, newPassword);
-                showNotification('Пароль успешно изменен! Теперь вы можете войти с новым паролем.', 'success');
-                closeConfirmCodeModal();
-            } catch (error) {
-                showNotification(`Ошибка сброса пароля: ${error.message}`, 'error');
+            // Для демо используем "1234" как правильный код
+            if (fullCode === "1234") {
+                // Запрашиваем новый пароль
+                const newPassword = prompt('Введите новый пароль:');
+                
+                if (!newPassword || newPassword.length < 6) {
+                    showNotification('Пароль должен содержать не менее 6 символов', 'error');
+                    return;
+                }
+                
+                // Находим пользователя и обновляем пароль
+                const userIndex = users.findIndex(u => u.email === contact || u.phone === contact);
+                if (userIndex !== -1) {
+                    users[userIndex].password = newPassword;
+                    localStorage.setItem('transportco_users', JSON.stringify(users));
+                    
+                    // Если текущий пользователь - обновляем его данные
+                    if (currentUser && (currentUser.email === contact || currentUser.phone === contact)) {
+                        currentUser.password = newPassword;
+                        localStorage.setItem('transportco_currentUser', JSON.stringify(currentUser));
+                    }
+                    
+                    showNotification('Пароль успешно изменен! Теперь вы можете войти с новым паролем.', 'success');
+                    closeConfirmCodeModal();
+                    openLoginModal();
+                } else {
+                    showNotification('Пользователь не найден', 'error');
+                }
+            } else {
+                showNotification('Неверный код подтверждения', 'error');
             }
         }
         
@@ -3462,7 +3487,7 @@
         }
         
         // Обработчики форм
-        async function handleLogin() {
+        function handleLogin() {
             const login = document.getElementById('auth-login').value;
             const password = document.getElementById('auth-password').value;
             
@@ -3484,22 +3509,45 @@
                 return;
             }
             
-            try {
-                const result = await loginUserAPI(login, password);
-                localStorage.setItem('token', result.token);
-                localStorage.setItem('user', JSON.stringify(result.user));
+            // Поиск пользователя
+            const user = users.find(u => 
+                (u.email === login || u.phone === login) && u.password === password
+            );
+            
+            if (user) {
+                if (!user.verified) {
+                    showError('auth-login', 'Аккаунт не подтвержден. Проверьте вашу почту или телефон.');
+                    showNotification('Аккаунт не подтвержден. Проверьте вашу почту или телефон.', 'warning');
+                    return;
+                }
+                
+                currentUser = user;
+                localStorage.setItem('transportco_currentUser', JSON.stringify(currentUser));
                 showNotification('Вход выполнен успешно!', 'success');
                 closeLoginModal();
                 loginUser();
-                // Загружаем данные профиля
-                loadUserProfile();
-            } catch (error) {
-                showError('auth-login', 'Неверный логин или пароль');
-                showNotification('Неверный логин или пароль', 'error');
+                
+                // Переход на запомненную страницу или профиль
+                if (pendingPageAfterLogin) {
+                    showPage(pendingPageAfterLogin);
+                    pendingPageAfterLogin = null;
+                } else {
+                    showPage('profile');
+                }
+            } else {
+                // Проверяем, что именно неверно
+                const userExists = users.some(u => u.email === login || u.phone === login);
+                if (!userExists) {
+                    showError('auth-login', 'Неверный телефон или email'); // ИЗМЕНЕНО: было "Неверный логин"
+                    showNotification('Неверный телефон или email', 'error'); // ИЗМЕНЕНО: было "Пользователь с таким логином не найден"
+                } else {
+                    showError('auth-password', 'Неверный пароль');
+                    showNotification('Неверный пароль', 'error');
+                }
             }
         }
         
-        async function handleRegister() {
+        function handleRegister() {
             const firstName = document.getElementById('reg-firstName').value;
             const lastName = document.getElementById('reg-lastName').value;
             const email = document.getElementById('reg-email').value;
@@ -3528,10 +3576,16 @@
             } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 showError('reg-email', 'Введите корректный email');
                 hasError = true;
+            } else if (users.some(u => u.email === email)) {
+                showError('reg-email', 'Пользователь с таким email уже существует');
+                hasError = true;
             }
             
             if (!phone) {
                 showError('reg-phone', 'Заполните это поле');
+                hasError = true;
+            } else if (users.some(u => u.phone === phone)) {
+                showError('reg-phone', 'Пользователь с таким телефоном уже существует');
                 hasError = true;
             }
             
@@ -3560,26 +3614,24 @@
                 return;
             }
             
-            try {
-                const userData = {
-                    firstName,
-                    lastName,
-                    email,
-                    phone,
-                    password
-                };
-                
-                await registerUserAPI(userData);
-                showNotification('Регистрация успешна! Проверьте вашу почту или телефон для подтверждения.', 'success');
-                closeRegisterModal();
-                openConfirmRegisterCodeModal();
-            } catch (error) {
-                showNotification(`Ошибка регистрации: ${error.message}`, 'error');
-            }
+            // Сохраняем данные регистрации
+            tempRegistrationData = {
+                firstName,
+                lastName,
+                email,
+                phone,
+                password
+            };
+            
+            showNotification('Регистрация начата! Проверьте SMS для подтверждения.', 'info');
+            
+            // Закрываем окно регистрации и открываем окно подтверждения SMS
+            closeRegisterModal();
+            openConfirmRegisterCodeModal();
         }
         
-        // Обновленная функция handleOrderSubmit с валидацией и API запросом
-        async function handleOrderSubmit(event) {
+        // Обновленная функция handleOrderSubmit
+        function handleOrderSubmit(event) {
             event.preventDefault();
             
             clearAllOrderErrors();
@@ -3658,6 +3710,8 @@
             }
             
             const orderData = {
+                id: orders.length + 1,
+                userId: currentUser ? currentUser.id : null,
                 senderName,
                 senderPhone,
                 senderEmail,
@@ -3672,28 +3726,33 @@
                 insurance,
                 packaging,
                 tracking,
-                comments
+                comments,
+                status: 'new',
+                price: Math.round(parseFloat(cargoWeight) * 100 + parseFloat(cargoVolume) * 500 + (insurance ? -0.05 : 0) + (packaging ? 2000 : 0)),
+                createdAt: new Date().toISOString()
             };
             
-            const token = localStorage.getItem('token');
+            orders.push(orderData);
+            localStorage.setItem('transportco_orders', JSON.stringify(orders));
             
-            try {
-                await createOrderAPI(orderData, token);
-                showNotification('Заказ успешно оформлен! Наш менеджер свяжется с вами в течение 30 минут.', 'success');
-                
-                // Сбрасываем форму
-                document.getElementById('orderForm').reset();
-                
-                // Показываем главную страницу
+            showNotification('Заказ успешно оформлен! Наш менеджер свяжется с вами в течение 30 минут.', 'success');
+            
+            // Сбрасываем форму
+            document.getElementById('orderForm').reset();
+            
+            // Если пользователь авторизован, показываем профиль и переходим на вкладку заказов
+            if (currentUser) {
+                showPage('profile');
+                showProfileTab('orders'); // Переходим на вкладку заказов
+                updateProfileOrderStats(); // Обновляем статистику и таблицу
+            } else {
                 showPage('main');
-            } catch (error) {
-                showNotification(`Ошибка оформления заказа: ${error.message}`, 'error');
             }
             
             return false;
         }
         
-        async function handleContactSubmit(event) {
+        function handleContactSubmit(event) {
             event.preventDefault();
             
             const contactData = {
@@ -3703,32 +3762,10 @@
                 message: document.getElementById('contact-message').value
             };
             
-            try {
-                await sendContactMessageAPI(contactData);
-                showNotification('Сообщение успешно отправлено! Мы ответим вам в ближайшее время.', 'success');
-                document.getElementById('contactForm').reset();
-            } catch (error) {
-                showNotification(`Ошибка отправки сообщения: ${error.message}`, 'error');
-            }
+            showNotification('Сообщение успешно отправлено! Мы ответим вам в ближайшее время.', 'success');
+            document.getElementById('contactForm').reset();
             
             return false;
-        }
-        
-        // Функция для загрузки профиля пользователя
-        async function loadUserProfile() {
-            const token = localStorage.getItem('token');
-            if (!token) return;
-            
-            try {
-                const profile = await getProfileAPI(token);
-                document.getElementById('profile-first-name').value = profile.firstName || '';
-                document.getElementById('profile-last-name').value = profile.lastName || '';
-                document.getElementById('profile-email').value = profile.email || '';
-                document.getElementById('profile-phone').value = profile.phone || '';
-                document.getElementById('profile-address').value = profile.address || '';
-            } catch (error) {
-                console.error('Ошибка загрузки профиля:', error);
-            }
         }
         
         // Функции для страницы "Мои заказы" в профиле
@@ -3747,12 +3784,10 @@
         
         function viewOrder(orderId) {
             showNotification(`Просмотр заказа ${orderId}`, 'info');
-            // В реальном приложении здесь будет переход на страницу деталей заказа
         }
         
         function trackOrder(orderId) {
             showNotification(`Отслеживание заказа ${orderId}`, 'info');
-            // В реальном приложении здесь будет переход на страницу отслеживания
         }
         
         // Закрытие модальных окон при клике вне их
@@ -3782,7 +3817,7 @@
             }
         });
         
-        // Инициализация - показать главную страницу при загрузке
+        // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
             // Установить сегодняшнюю дату в поле даты отправки
             const today = new Date().toISOString().split('T')[0];
@@ -3792,155 +3827,28 @@
             }
             
             // Проверяем авторизацию при загрузке
-            const token = localStorage.getItem('token');
-            if (token) {
+            if (currentUser) {
                 loginUser();
-                loadUserProfile();
-            }
-            
-            // Назначить обработчики событий для форм
-            const loginBtn = document.querySelector('#loginModal .auth-btn');
-            if (loginBtn) {
-                loginBtn.addEventListener('click', handleLogin);
-            }
-            
-            const registerBtn = document.querySelector('#registerModal .auth-btn.register-btn');
-            if (registerBtn) {
-                registerBtn.addEventListener('click', handleRegister);
-            }
-            
-            const orderForm = document.getElementById('orderForm');
-            if (orderForm) {
-                orderForm.addEventListener('submit', handleOrderSubmit);
-            }
-            
-            const contactForm = document.getElementById('contactForm');
-            if (contactForm) {
-                contactForm.addEventListener('submit', handleContactSubmit);
-            }
-            
-            // Назначить обработчики для ссылок переключения между модальными окнами
-            const switchToRegisterLink = document.querySelector('#loginModal .auth-link a');
-            if (switchToRegisterLink) {
-                switchToRegisterLink.addEventListener('click', switchToRegister);
-            }
-            
-            const switchToLoginLink = document.querySelector('#registerModal .auth-link a');
-            if (switchToLoginLink) {
-                switchToLoginLink.addEventListener('click', switchToLogin);
-            }
-            
-            // Обработчик для ссылки "Забыли пароль?"
-            const forgotPasswordLink = document.querySelector('#loginModal .auth-forgot-password');
-            if (forgotPasswordLink) {
-                forgotPasswordLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    openForgotPasswordModal();
-                });
-            }
-            
-            // Обработчик для кнопки восстановления пароля
-            const recoveryBtn = document.querySelector('#forgotPasswordModal .recovery-btn');
-            if (recoveryBtn) {
-                recoveryBtn.addEventListener('click', sendRecoveryCode);
-            }
-            
-            // Обработчик для кнопки подтверждения кода
-            const verifyBtn = document.querySelector('#confirmCodeModal .continue-btn');
-            if (verifyBtn) {
-                verifyBtn.addEventListener('click', verifyCode);
-            }
-            
-            // Обработчик для кнопки "Назад" в окне подтверждения кода
-            const backBtn = document.querySelector('#confirmCodeModal .back-btn');
-            if (backBtn) {
-                backBtn.addEventListener('click', backToForgotPassword);
-            }
-            
-            // Обработчик для кнопки повторной отправки кода
-            const resendLink = document.querySelector('#confirmCodeModal .resend-code a');
-            if (resendLink) {
-                resendLink.addEventListener('click', resendCode);
-            }
-            
-            // Обработчик для кнопки подтверждения регистрации
-            const verifyRegisterBtn = document.querySelector('#confirmRegisterCodeModal .continue-btn');
-            if (verifyRegisterBtn) {
-                verifyRegisterBtn.addEventListener('click', verifyRegisterCode);
-            }
-            
-            // Обработчик для кнопки "Назад" в окне подтверждения регистрации
-            const backRegisterBtn = document.querySelector('#confirmRegisterCodeModal .back-btn');
-            if (backRegisterBtn) {
-                backRegisterBtn.addEventListener('click', backToRegister);
-            }
-            
-            // Обработчик для кнопки повторной отправки кода в регистрации
-            const resendRegisterLink = document.querySelector('#confirmRegisterCodeModal .resend-code a');
-            if (resendRegisterLink) {
-                resendRegisterLink.addEventListener('click', resendRegisterCode);
-            }
-            
-            // Инициализация фильтров для страницы профиля
-            const profileStatusFilter = document.getElementById('profile-status-filter');
-            const profilePeriodFilter = document.getElementById('profile-period-filter');
-            const profileSearchInput = document.getElementById('profile-search-input');
-            
-            if (profileStatusFilter) {
-                profileStatusFilter.addEventListener('change', filterProfileOrders);
-            }
-            
-            if (profilePeriodFilter) {
-                profilePeriodFilter.addEventListener('change', filterProfileOrders);
-            }
-            
-            if (profileSearchInput) {
-                profileSearchInput.addEventListener('input', filterProfileOrders);
             }
             
             // По умолчанию показываем сообщение об отсутствии заказов
             toggleOrdersVisibility(false);
-            if (token) {
-                updateProfileOrderStats();
+            
+            // Добавляем обработчики фильтров заказов
+            const statusFilter = document.getElementById('profile-status-filter');
+            const periodFilter = document.getElementById('profile-period-filter');
+            const searchInput = document.getElementById('profile-search-input');
+            
+            if (statusFilter) {
+                statusFilter.addEventListener('change', filterProfileOrders);
+            }
+            if (periodFilter) {
+                periodFilter.addEventListener('change', filterProfileOrders);
+            }
+            if (searchInput) {
+                searchInput.addEventListener('input', filterProfileOrders);
             }
         });
-        
-        // Функция фильтрации заказов в профиле
-        async function filterProfileOrders() {
-            const token = localStorage.getItem('token');
-            if (!token) return;
-            
-            const status = document.getElementById('profile-status-filter').value;
-            const period = document.getElementById('profile-period-filter').value;
-            const search = document.getElementById('profile-search-input').value;
-            
-            const filters = {};
-            
-            if (status && status !== 'Все заказы') {
-                filters.status = status.toLowerCase();
-            }
-            
-            if (period && period !== 'Все время') {
-                filters.period = period;
-            }
-            
-            if (search) {
-                filters.search = search;
-            }
-            
-            try {
-                const orders = await getUserOrdersAPI(token, filters);
-                if (orders && orders.length > 0) {
-                    displayUserOrders(orders);
-                    toggleOrdersVisibility(true);
-                } else {
-                    toggleOrdersVisibility(false);
-                }
-            } catch (error) {
-                console.error('Ошибка фильтрации заказов:', error);
-                toggleOrdersVisibility(false);
-            }
-        }
     </script>
 </body>
 </html>
