@@ -1383,7 +1383,7 @@
 
         .table-header {
             display: grid;
-            grid-template-columns: 1fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr 1.5fr;
+            grid-template-columns: 1fr 1fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr 1.5fr;
             background: #f8f9fa;
             padding: 15px 20px;
             border-bottom: 1px solid #e0e0e0;
@@ -1401,7 +1401,7 @@
 
         .order-row {
             display: grid;
-            grid-template-columns: 1fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr 1.5fr;
+            grid-template-columns: 1fr 1fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr 1.5fr;
             padding: 20px 20px;
             border-bottom: 1px solid #f0f0f0;
             align-items: center;
@@ -1643,11 +1643,11 @@
         /* Адаптивность */
         @media (max-width: 1200px) {
             .table-header {
-                grid-template-columns: 1fr 1fr 1.2fr 1.2fr 0.8fr 0.8fr 0.8fr 1.2fr;
+                grid-template-columns: 1fr 1fr 1fr 1.2fr 1.2fr 0.8fr 0.8fr 0.8fr 1.2fr;
             }
             
             .order-row {
-                grid-template-columns: 1fr 1fr 1.2fr 1.2fr 0.8fr 0.8fr 0.8fr 1.2fr;
+                grid-template-columns: 1fr 1fr 1fr 1.2fr 1.2fr 0.8fr 0.8fr 0.8fr 1.2fr;
             }
         }
         
@@ -1672,10 +1672,12 @@
             .table-header-item:nth-child(5),
             .table-header-item:nth-child(6),
             .table-header-item:nth-child(7),
-            .table-header-item:nth-child(8) {
+            .table-header-item:nth-child(8)
+            .table-header-item:nth-child(9) {
                 display: none;
             }
             
+            .order-shiping-date,
             .order-cargo,
             .order-status-cell,
             .order-price-cell,
@@ -1791,6 +1793,7 @@
                 font-size: 16px;
             }
             
+            .order-shiping-date,
             .order-cargo,
             .order-status-cell,
             .order-price-cell,
@@ -2259,7 +2262,8 @@
                         <div id="profile-orders-table" class="orders-table-container" style="display: none;">
                             <div class="table-header">
                                 <div class="table-header-item">№ ЗАКАЗА</div>
-                                <div class="table-header-item">ДАТА</div>
+                                <div class="table-header-item">ДАТА ЗАЯВКИ</div>
+                                <div class="table-header-item">ДАТА ОТПРАВЛЕНИЯ</div>
                                 <div class="table-header-item">АДРЕС ОТПРАВЛЕНИЯ</div>
                                 <div class="table-header-item">АДРЕС ДОСТАВКИ</div>
                                 <div class="table-header-item">ГРУЗ</div>
@@ -2849,13 +2853,21 @@
             const tableBody = ordersTable.querySelector('tbody') || document.createElement('tbody');
             tableBody.innerHTML = '';
             
-            orders.forEach(order => {
+            orders.forEach((order, index) => {
                 const row = document.createElement('div');
                 row.className = 'order-row';
                 
                 // Форматирование даты
                 const orderDate = new Date(order.createdAt);
                 const formattedDate = orderDate.toLocaleDateString('ru-RU', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                });
+
+                // Форматирование даты отправления (shippingDate)
+                const shippingDate = new Date(order.shippingDate);
+                const formattedShippingDate = shippingDate.toLocaleDateString('ru-RU', {
                     day: 'numeric',
                     month: 'short',
                     year: 'numeric'
@@ -2867,10 +2879,13 @@
                 
                 row.innerHTML = `
                     <div class="order-cell order-id">
-                        <span class="order-id-text">#${order.id}</span>
+                        <span class="order-id-text">#${index + 1}</span>
                     </div>
                     <div class="order-cell date-container">
                         <span class="date-day">${formattedDate}</span>
+                    </div>
+                    <div class="order-cell date-container order-shipping-date" data-label="Дата отправления">
+                        <span class="date-day">${formattedShippingDate}</span>
                     </div>
                     <div class="order-cell address-container">
                         <span class="address-line">${order.pickupAddress || 'Не указан'}</span>
@@ -3709,8 +3724,9 @@
                 return false;
             }
             
+            const maxId = orders.length > 0 ? Math.max(...orders.map(order => order.id)) : 0;
             const orderData = {
-                id: orders.length + 1,
+                id: maxId + 1,
                 userId: currentUser ? currentUser.id : null,
                 senderName,
                 senderPhone,
