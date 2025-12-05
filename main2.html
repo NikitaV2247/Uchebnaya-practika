@@ -1643,6 +1643,351 @@
             margin-bottom: 30px;
         }
         
+        /* ========== НОВЫЕ СТИЛИ ДЛЯ ВОДИТЕЛЯ И АДМИНА ========== */
+        
+        /* Панель водителя */
+        .driver-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .driver-stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+            text-align: center;
+        }
+        
+        .driver-stat-number {
+            font-size: 42px;
+            font-weight: 700;
+            color: #0047AB;
+            margin-bottom: 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .driver-stat-label {
+            color: #666;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .driver-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .driver-btn {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .btn-accept {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-accept:hover {
+            background: #218838;
+        }
+        
+        .btn-picked {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .btn-picked:hover {
+            background: #138496;
+        }
+        
+        .btn-delivered {
+            background: #6f42c1;
+            color: white;
+        }
+        
+        .btn-delivered:hover {
+            background: #5a379f;
+        }
+        
+        /* Панель администратора */
+        .admin-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .admin-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-card-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #0047AB;
+        }
+        
+        .admin-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .admin-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Таблицы для админа */
+        .admin-table-container {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 40px;
+        }
+        
+        .admin-table-header {
+            display: grid;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 600;
+            color: #333;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .admin-table-row {
+            display: grid;
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+            align-items: center;
+        }
+        
+        .admin-table-row:last-child {
+            border-bottom: none;
+        }
+        
+        .admin-table-cell {
+            padding: 10px;
+        }
+        
+        /* Форма "Стать водителем" */
+        .become-driver-form {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .become-driver-form h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            color: #0047AB;
+            margin-bottom: 20px;
+        }
+        
+        .driver-license-input {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .driver-license-input input {
+            flex: 1;
+        }
+        
+        /* Модальные окна для админа */
+        .admin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .admin-modal.active {
+            display: flex;
+        }
+        
+        .admin-modal-content {
+            width: 100%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .admin-modal-header {
+            background: #0047AB;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .close-admin-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+        }
+        
+        .close-admin-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .admin-modal-body {
+            padding: 30px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        /* Навигация по ролям */
+        .role-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        
+        .role-nav-btn {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            position: relative;
+            font-family: 'Montserrat', sans-serif;
+            transition: color 0.3s;
+        }
+        
+        .role-nav-btn:hover {
+            color: #0047AB;
+        }
+        
+        .role-nav-btn.active {
+            color: #0047AB;
+        }
+        
+        .role-nav-btn.active:after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #0047AB;
+        }
+        
+        /* Рейтинг водителя */
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .star {
+            font-size: 24px;
+            color: #ddd;
+        }
+        
+        .star.filled {
+            color: #FFC107;
+        }
+        
+        /* Адаптивность для новых элементов */
+        @media (max-width: 768px) {
+            .driver-dashboard, .admin-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .driver-actions {
+                flex-direction: column;
+            }
+            
+            .admin-table-header, .admin-table-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .admin-table-cell:before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #666;
+                font-size: 12px;
+                text-transform: uppercase;
+                margin-right: 10px;
+                text-align: left;
+                flex: 0 0 100px;
+            }
+            
+            .role-nav {
+                flex-direction: column;
+            }
+            
+            .role-nav-btn {
+                text-align: left;
+                padding: 10px;
+            }
+            
+            .role-nav-btn.active:after {
+                bottom: -5px;
+            }
+        }
+        
         /* Адаптивность */
         @media (max-width: 1200px) {
             .table-header {
@@ -1779,24 +2124,16 @@
                 font-size: 16px;
             }
             
-            .order-shiping-date,
-            .order-cargo,
-            .order-status-cell,
-            .order-price-cell,
-            .order-actions-cell {
+            .order-shiping-date, .order-cargo, .order-status-cell, .order-price-cell, .order-actions-cell {
                 display: flex;
             }
             
-            .date-container,
-            .address-container {
+            .date-container, .address-container {
                 text-align: right;
                 align-items: flex-end;
             }
             
-            .date-day,
-            .date-year,
-            .address-line,
-            .cargo-text {
+            .date-day, .date-year, .address-line, .cargo-text {
                 text-align: right;
             }
             
@@ -1825,8 +2162,7 @@
             }
 
             /* Показываем все ячейки для мобильной версии */
-            .order-shipping-date-cell,
-            .order-category-cell {
+            .order-shipping-date-cell, .order-category-cell {
                 display: flex;
             }
         }
@@ -1908,6 +2244,9 @@
                 <a onclick="showPage('main')" class="active">Главная</a>
                 <a onclick="showPage('about')">О компании</a>
                 <a onclick="showPage('contacts')">Контакты</a>
+                <!-- Скрытые ссылки для водителя и админа -->
+                <a id="driver-link" onclick="showPage('driver')" style="display: none;">Водителю</a>
+                <a id="admin-link" onclick="showPage('admin')" style="display: none;">Админ</a>
             </nav>
             <div class="auth-buttons">
                 <div id="unauth-buttons" style="display: flex; gap: 10px;">
@@ -2118,6 +2457,7 @@
                 <div class="profile-nav">
                     <button class="profile-nav-btn active" onclick="showProfileTab('data')">Данные</button>
                     <button class="profile-nav-btn" onclick="showProfileTab('orders')">Мои заказы</button>
+                    <button class="profile-nav-btn" onclick="showProfileTab('driver')" id="become-driver-tab">Стать водителем</button>
                 </div>
                 
                 <!-- Содержимое вкладок -->
@@ -2275,6 +2615,65 @@
                             <button class="btn-order" onclick="showPage('order')">Сделать первый заказ</button>
                         </div>
                     </div>
+                    
+                    <!-- Вкладка "Стать водителем" -->
+                    <div id="profile-driver" class="profile-tab" style="display: none;">
+                        <div class="become-driver-form">
+                            <h3>Подать заявку на работу водителем</h3>
+                            <form id="driver-application-form" onsubmit="handleDriverApplication(event)">
+                                <div class="order-form-row">
+                                    <div class="order-form-group">
+                                        <label for="driver-license">Водительское удостоверение</label>
+                                        <div class="driver-license-input">
+                                            <input type="text" id="driver-license" placeholder="Серия и номер" required>
+                                        </div>
+                                    </div>
+                                    <div class="order-form-group">
+                                        <label for="driver-experience">Опыт вождения (лет)</label>
+                                        <input type="number" id="driver-experience" min="0" max="50" placeholder="3" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="order-form-row">
+                                    <div class="order-form-group">
+                                        <label for="driver-vehicle-type">Тип транспорта</label>
+                                        <select id="driver-vehicle-type" required>
+                                            <option value="">Выберите тип</option>
+                                            <option value="light">Легковой автомобиль</option>
+                                            <option value="van">Микроавтобус</option>
+                                            <option value="truck">Грузовой автомобиль</option>
+                                            <option value="refrigerator">Рефрижератор</option>
+                                        </select>
+                                    </div>
+                                    <div class="order-form-group">
+                                        <label for="driver-phone">Контактный телефон</label>
+                                        <input type="tel" id="driver-phone" placeholder="+7 (912) 345-67-89" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="order-form-group">
+                                    <label for="driver-comment">Дополнительная информация</label>
+                                    <textarea id="driver-comment" rows="4" placeholder="Опыт работы, рекомендации и т.д."></textarea>
+                                </div>
+                                
+                                <div class="checkbox-group">
+                                    <label>
+                                        <input type="checkbox" id="driver-agree" required>
+                                        Согласен на обработку персональных данных
+                                    </label>
+                                </div>
+                                
+                                <button type="submit" class="order-submit-btn">Подать заявку</button>
+                            </form>
+                        </div>
+                        
+                        <div id="driver-application-status" style="display: none;">
+                            <div class="profile-section">
+                                <h2>Статус заявки</h2>
+                                <div id="driver-status-content"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2423,7 +2822,7 @@
                         <div class="checkbox-group">
                             <label>
                                 <input type="checkbox" id="insurance">
-                                Страховка груза (-5% от стоимости)
+                                Страховка груза (1% от стоимости)
                             </label>
                         </div>
                         
@@ -2431,13 +2830,6 @@
                             <label>
                                 <input type="checkbox" id="packaging">
                                 Профессиональная упаковка (+2000 ₽)
-                            </label>
-                        </div>
-                        
-                        <div class="checkbox-group">
-                            <label>
-                                <input type="checkbox" id="tracking">
-                                Отслеживание в реальном времени (бесплатно)
                             </label>
                         </div>
                     </div>
@@ -2453,6 +2845,206 @@
                     
                     <button type="submit" class="order-submit-btn">Оформить заказ</button>
                 </form>
+            </div>
+        </div>
+        
+        <!-- Страница "Водитель" -->
+        <div id="driver-page" class="page-content">
+            <div class="page-header">
+                <div class="page-header-content">
+                    <h1>Кабинет водителя</h1>
+                    <p>Управление заказами и статистика</p>
+                </div>
+            </div>
+            
+            <div class="container">
+                <!-- Навигация водителя -->
+                <div class="role-nav">
+                    <button class="role-nav-btn active" onclick="showDriverTab('available')">Доступные заказы</button>
+                    <button class="role-nav-btn" onclick="showDriverTab('my-orders')">Мои заказы</button>
+                    <button class="role-nav-btn" onclick="showDriverTab('history')">История доставок</button>
+                    <button class="role-nav-btn" onclick="showDriverTab('profile')">Профиль</button>
+                </div>
+                
+                <!-- Содержимое вкладок водителя -->
+                <div id="driver-tab-content">
+                    <!-- Вкладка "Доступные заказы" -->
+                    <div id="driver-available" class="profile-tab active">
+                        <div class="driver-dashboard">
+                            <div class="driver-stat-card">
+                                <div class="driver-stat-number" id="available-orders-count">0</div>
+                                <div class="driver-stat-label">Доступных заказов</div>
+                            </div>
+                            <div class="driver-stat-card">
+                                <div class="driver-stat-number" id="my-active-orders">0</div>
+                                <div class="driver-stat-label">Активных заказов</div>
+                            </div>
+                            <div class="driver-stat-card">
+                                <div class="driver-stat-number" id="driver-rating">4.8</div>
+                                <div class="driver-stat-label">Рейтинг</div>
+                            </div>
+                        </div>
+                        
+                        <div id="available-orders-list" class="orders-table-container">
+                            <!-- Список доступных заказов -->
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка "Мои заказы" -->
+                    <div id="driver-my-orders" class="profile-tab" style="display: none;">
+                        <div id="active-orders-list" class="orders-table-container">
+                            <!-- Список активных заказов водителя -->
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка "История доставок" -->
+                    <div id="driver-history" class="profile-tab" style="display: none;">
+                        <div id="delivery-history" class="orders-table-container">
+                            <!-- История завершенных заказов -->
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка "Профиль водителя" -->
+                    <div id="driver-profile" class="profile-tab" style="display: none;">
+                        <div class="profile-section">
+                            <h2>Профиль водителя</h2>
+                            <div class="order-form-row">
+                                <div class="order-form-group">
+                                    <label>Водительское удостоверение</label>
+                                    <input type="text" class="profile-field-readonly" id="driver-profile-license" readonly>
+                                </div>
+                                <div class="order-form-group">
+                                    <label>Опыт вождения</label>
+                                    <input type="text" class="profile-field-readonly" id="driver-profile-experience" readonly>
+                                </div>
+                            </div>
+                            <div class="order-form-row">
+                                <div class="order-form-group">
+                                    <label>Тип транспорта</label>
+                                    <input type="text" class="profile-field-readonly" id="driver-profile-vehicle" readonly>
+                                </div>
+                                <div class="order-form-group">
+                                    <label>Рейтинг</label>
+                                    <div class="rating-stars" id="driver-rating-stars"></div>
+                                </div>
+                            </div>
+                            <div class="order-form-row">
+                                <div class="order-form-group">
+                                    <label>Доставлено заказов</label>
+                                    <input type="text" class="profile-field-readonly" id="driver-profile-delivered" readonly>
+                                </div>
+                                <div class="order-form-group">
+                                    <label>Общий пробег</label>
+                                    <input type="text" class="profile-field-readonly" id="driver-profile-mileage" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Страница "Администратор" -->
+        <div id="admin-page" class="page-content">
+            <div class="page-header">
+                <div class="page-header-content">
+                    <h1>Панель администратора</h1>
+                    <p>Управление системой и пользователями</p>
+                </div>
+            </div>
+            
+            <div class="container">
+                <!-- Навигация администратора -->
+                <div class="role-nav">
+                    <button class="role-nav-btn active" onclick="showAdminTab('dashboard')">Главная</button>
+                    <button class="role-nav-btn" onclick="showAdminTab('driver-applications')">Заявки водителей</button>
+                    <button class="role-nav-btn" onclick="showAdminTab('drivers')">Водители</button>
+                    <button class="role-nav-btn" onclick="showAdminTab('orders')">Заказы</button>
+                    <button class="role-nav-btn" onclick="showAdminTab('assign-driver')">Назначить водителя</button>
+                </div>
+                
+                <!-- Содержимое вкладок администратора -->
+                <div id="admin-tab-content">
+                    <!-- Вкладка "Главная" -->
+                    <div id="admin-dashboard" class="profile-tab active">
+                        <div class="admin-dashboard">
+                            <div class="admin-card" onclick="showAdminTab('driver-applications')">
+                                <div class="admin-card-icon">📋</div>
+                                <h3>Заявки водителей</h3>
+                                <p id="pending-applications-count">0 ожидают рассмотрения</p>
+                            </div>
+                            <div class="admin-card" onclick="showAdminTab('drivers')">
+                                <div class="admin-card-icon">👨‍✈️</div>
+                                <h3>Водители</h3>
+                                <p id="active-drivers-count">0 активных водителей</p>
+                            </div>
+                            <div class="admin-card" onclick="showAdminTab('orders')">
+                                <div class="admin-card-icon">📦</div>
+                                <h3>Заказы</h3>
+                                <p id="total-orders-count">0 всего заказов</p>
+                            </div>
+                            <div class="admin-card" onclick="showAdminTab('assign-driver')">
+                                <div class="admin-card-icon">🚚</div>
+                                <h3>Назначить водителя</h3>
+                                <p id="unassigned-orders-count">0 заказов без водителя</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка "Заявки водителей" -->
+                    <div id="admin-driver-applications" class="profile-tab" style="display: none;">
+                        <div id="driver-applications-list" class="admin-table-container">
+                            <!-- Список заявок водителей -->
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка "Водители" -->
+                    <div id="admin-drivers" class="profile-tab" style="display: none;">
+                        <div id="drivers-list" class="admin-table-container">
+                            <!-- Список водителей -->
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка "Заказы" -->
+                    <div id="admin-orders" class="profile-tab" style="display: none;">
+                        <!-- Фильтры заказов -->
+                        <div class="filters-section">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label for="admin-status-filter">Статус:</label>
+                                    <select id="admin-status-filter" onchange="filterAdminOrders()">
+                                        <option value="all">Все заказы</option>
+                                        <option value="new">Новые</option>
+                                        <option value="confirmed">Подтвержденные</option>
+                                        <option value="in_transit">В пути</option>
+                                        <option value="delivered">Доставленные</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="admin-driver-filter">Водитель:</label>
+                                    <select id="admin-driver-filter" onchange="filterAdminOrders()">
+                                        <option value="all">Все водители</option>
+                                        <option value="unassigned">Без водителя</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group reset-group">
+                                    <button class="reset-btn" onclick="resetAdminFilters()">Сбросить</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="admin-orders-list" class="orders-table-container">
+                            <!-- Список всех заказов -->
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка "Назначить водителя" -->
+                    <div id="admin-assign-driver" class="profile-tab" style="display: none;">
+                        <div id="assign-driver-content">
+                            <!-- Контент для назначения водителя -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -2679,8 +3271,45 @@
         </div>
     </div>
 
+    <!-- Модальное окно просмотра заказа (админ) -->
+    <div id="viewOrderModal" class="admin-modal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
+                <button class="close-admin-modal" onclick="closeViewOrderModal()">×</button>
+                <h2>Детали заказа</h2>
+            </div>
+            <div class="admin-modal-body" id="order-details-content">
+                <!-- Детали заказа -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно назначения водителя -->
+    <div id="assignDriverModal" class="admin-modal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
+                <button class="close-admin-modal" onclick="closeAssignDriverModal()">×</button>
+                <h2>Назначить водителя</h2>
+            </div>
+            <div class="admin-modal-body">
+                <div class="order-form-group">
+                    <label for="select-driver">Выберите водителя:</label>
+                    <select id="select-driver" class="auth-input">
+                        <option value="">Выберите водителя...</option>
+                    </select>
+                </div>
+                <div class="forgot-password-buttons">
+                    <button class="back-btn" onclick="closeAssignDriverModal()">Отмена</button>
+                    <button class="recovery-btn" onclick="assignDriverToOrder()">Назначить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Локальное хранилище для пользователей (имитация базы данных)
+        // Расширенная модель данных
+        
+        // 1. Расширяем модель пользователя
         let users = JSON.parse(localStorage.getItem('transportco_users')) || [
             {
                 id: 1,
@@ -2689,16 +3318,52 @@
                 password: "password123",
                 firstName: "Иван",
                 lastName: "Иванов",
-                verified: true
+                verified: true,
+                role: "client" // client, driver, admin
+            },
+            {
+                id: 2,
+                email: "admin@transportco.ru",
+                phone: "+79123456780",
+                password: "admin123",
+                firstName: "Админ",
+                lastName: "Админов",
+                verified: true,
+                role: "admin"
+            },
+            {
+                id: 3,
+                email: "driver@transportco.ru",
+                phone: "+79123456781",
+                password: "driver123",
+                firstName: "Петр",
+                lastName: "Петров",
+                verified: true,
+                role: "driver",
+                driverData: {
+                    license: "78XX123456",
+                    experience: 5,
+                    vehicleType: "truck",
+                    rating: 4.8,
+                    deliveredOrders: 24,
+                    totalMileage: 15000,
+                    status: "active"
+                }
             }
         ];
+        
+        // 2. Добавляем заявки водителей
+        let driverApplications = JSON.parse(localStorage.getItem('transportco_driver_apps')) || [];
+        
+        // 3. Расширяем модель заказа
+        let orders = JSON.parse(localStorage.getItem('transportco_orders')) || [];
         
         // Текущий пользователь
         let currentUser = JSON.parse(localStorage.getItem('transportco_currentUser')) || null;
         
-        // Заказы (имитация базы данных)
-        let orders = JSON.parse(localStorage.getItem('transportco_orders')) || [];
-
+        // Запоминаем ID заказа для назначения водителя
+        let orderToAssign = null;
+        
         // База расстояний между городами (в км)
         const cityDistances = {
             // Центральный регион
@@ -2846,6 +3511,95 @@
             return notification;
         }
         
+        // Функция для обновления интерфейса в зависимости от роли
+        function updateUIForRole() {
+            const driverLink = document.getElementById('driver-link');
+            const adminLink = document.getElementById('admin-link');
+            const becomeDriverTab = document.getElementById('become-driver-tab');
+            
+            if (currentUser) {
+                if (currentUser.role === 'driver') {
+                    driverLink.style.display = 'block';
+                    becomeDriverTab.style.display = 'none';
+                } else if (currentUser.role === 'admin') {
+                    adminLink.style.display = 'block';
+                    becomeDriverTab.style.display = 'none';
+                } else if (currentUser.role === 'client') {
+                    // Проверяем, есть ли уже заявка
+                    const hasApplication = driverApplications.some(app => app.userId === currentUser.id);
+                    if (!hasApplication) {
+                        becomeDriverTab.style.display = 'block';
+                    }
+                }
+            } else {
+                driverLink.style.display = 'none';
+                adminLink.style.display = 'none';
+            }
+        }
+        
+        // Функция для обработки заявки "Стать водителем"
+        function handleDriverApplication(event) {
+            event.preventDefault();
+            
+            if (!currentUser) {
+                showNotification('Для подачи заявки необходимо войти в систему', 'warning');
+                return false;
+            }
+            
+            const license = document.getElementById('driver-license').value;
+            const experience = document.getElementById('driver-experience').value;
+            const vehicleType = document.getElementById('driver-vehicle-type').value;
+            const phone = document.getElementById('driver-phone').value;
+            const comment = document.getElementById('driver-comment').value;
+            
+            // Проверяем, нет ли уже заявки
+            const existingApp = driverApplications.find(app => app.userId === currentUser.id);
+            if (existingApp) {
+                showNotification('Вы уже отправили заявку. Ожидайте решения администратора.', 'warning');
+                return false;
+            }
+            
+            // Создаем заявку
+            const application = {
+                id: driverApplications.length + 1,
+                userId: currentUser.id,
+                userName: `${currentUser.firstName} ${currentUser.lastName}`,
+                userEmail: currentUser.email,
+                license: license,
+                experience: parseInt(experience),
+                vehicleType: vehicleType,
+                phone: phone,
+                comment: comment,
+                status: 'pending', // pending, approved, rejected
+                createdAt: new Date().toISOString()
+            };
+            
+            driverApplications.push(application);
+            localStorage.setItem('transportco_driver_apps', JSON.stringify(driverApplications));
+            
+            // Обновляем статус на вкладке
+            document.getElementById('driver-application-status').style.display = 'block';
+            document.getElementById('driver-status-content').innerHTML = `
+                <div class="order-status processing">
+                    <span class="status-icon">●</span>
+                    <span>На рассмотрении</span>
+                </div>
+                <p style="margin-top: 15px;">Ваша заявка отправлена. Администратор рассмотрит её в ближайшее время.</p>
+            `;
+            
+            showNotification('Заявка успешно отправлена!', 'success');
+            
+            // Скрываем форму
+            document.getElementById('driver-application-form').style.display = 'none';
+            
+            // Обновляем статистику для админа (если админ онлайн)
+            if (currentUser.role === 'admin') {
+                updateAdminStats();
+            }
+            
+            return false;
+        }
+        
         // Функция для переключения страниц
         function showPage(pageId) {
             // Проверяем авторизацию для доступа к профилю и заказу
@@ -2858,6 +3612,19 @@
                     pendingPageAfterLogin = 'profile';
                 }
                 openLoginModal();
+                return;
+            }
+            
+            // Проверяем права доступа для водительской и админской панели
+            if (pageId === 'driver' && currentUser && currentUser.role !== 'driver') {
+                showNotification('Доступно только для водителей', 'error');
+                showPage('profile');
+                return;
+            }
+            
+            if (pageId === 'admin' && currentUser && currentUser.role !== 'admin') {
+                showNotification('Доступно только для администраторов', 'error');
+                showPage('profile');
                 return;
             }
             
@@ -2889,6 +3656,16 @@
             if (pageId === 'profile') {
                 showProfileTab('data');
             }
+            
+            // Если показываем страницу водителя, загружаем доступные заказы
+            if (pageId === 'driver') {
+                showDriverTab('available');
+            }
+            
+            // Если показываем страницу админа, показываем dashboard
+            if (pageId === 'admin') {
+                showAdminTab('dashboard');
+            }
         }
         
         // Функция для получения названия страницы по ID
@@ -2898,7 +3675,9 @@
                 'about': 'О компании',
                 'contacts': 'Контакты',
                 'profile': 'Профиль',
-                'order': 'Заказать перевозку'
+                'order': 'Заказать перевозку',
+                'driver': 'Водителю',
+                'admin': 'Админ'
             };
             
             return pageNames[pageId] || 'Главная';
@@ -3224,7 +4003,28 @@
                 document.getElementById('profile-last-name').value = currentUser.lastName || '';
                 document.getElementById('profile-email').value = currentUser.email || '';
                 document.getElementById('profile-phone').value = currentUser.phone || '';
+                
+                // Проверяем заявку на водителя
+                const hasApplication = driverApplications.some(app => 
+                    app.userId === currentUser.id && 
+                    app.status === 'pending'
+                );
+                
+                if (hasApplication && currentUser.role === 'client') {
+                    document.getElementById('driver-application-status').style.display = 'block';
+                    document.getElementById('driver-status-content').innerHTML = `
+                        <div class="order-status processing">
+                            <span class="status-icon">●</span>
+                            <span>На рассмотрении</span>
+                        </div>
+                        <p style="margin-top: 15px;">Ваша заявка на водителя находится на рассмотрении администратора.</p>
+                    `;
+                    document.getElementById('driver-application-form').style.display = 'none';
+                }
             }
+            
+            // Обновляем интерфейс в зависимости от роли
+            updateUIForRole();
         }
         
         function logout() {
@@ -3234,6 +4034,989 @@
             document.getElementById('auth-user-buttons').style.display = 'none';
             showPage('main');
             showNotification('Вы успешно вышли из системы', 'info');
+        }
+        
+        // ФУНКЦИИ ДЛЯ ВОДИТЕЛЯ
+        
+        // Функция для отображения вкладки водителя
+        function showDriverTab(tabName) {
+            // Убираем активный класс у всех кнопок
+            const navButtons = document.querySelectorAll('.role-nav-btn');
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Добавляем активный класс нажатой кнопке
+            document.querySelector(`.role-nav-btn[onclick*="${tabName}"]`).classList.add('active');
+            
+            // Скрываем все вкладки водителя
+            const tabs = ['driver-available', 'driver-my-orders', 'driver-history', 'driver-profile'];
+            tabs.forEach(tab => {
+                const tabElement = document.getElementById(tab);
+                if (tabElement) tabElement.style.display = 'none';
+            });
+            
+            // Показываем выбранную вкладку
+            const tabElement = document.getElementById(`driver-${tabName}`);
+            if (tabElement) {
+                tabElement.style.display = 'block';
+                
+                // Обновляем данные в зависимости от вкладки
+                switch(tabName) {
+                    case 'available':
+                        loadAvailableOrders();
+                        updateDriverStats();
+                        break;
+                    case 'my-orders':
+                        loadDriverActiveOrders();
+                        break;
+                    case 'history':
+                        loadDriverHistory();
+                        break;
+                    case 'profile':
+                        loadDriverProfile();
+                        break;
+                }
+            }
+        }
+        
+        // Функция для загрузки доступных заказов (статус "confirmed")
+        function loadAvailableOrders() {
+            const availableOrders = orders.filter(order => 
+                order.status === 'confirmed' && 
+                (!order.driverId || order.driverId === currentUser.id)
+            );
+            
+            const ordersList = document.getElementById('available-orders-list');
+            ordersList.innerHTML = '';
+            
+            if (availableOrders.length === 0) {
+                ordersList.innerHTML = `
+                    <div class="no-orders-container">
+                        <div class="no-orders-icon">📭</div>
+                        <h3>Нет доступных заказов</h3>
+                        <p>Все заказы уже приняты другими водителями</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Создаем таблицу
+            ordersList.innerHTML = `
+                <div class="table-header">
+                    <div class="table-header-item">№ ЗАКАЗА</div>
+                    <div class="table-header-item">АДРЕС ОТПРАВЛЕНИЯ</div>
+                    <div class="table-header-item">АДРЕС ДОСТАВКИ</div>
+                    <div class="table-header-item">ГРУЗ</div>
+                    <div class="table-header-item">РАССТОЯНИЕ</div>
+                    <div class="table-header-item">ЦЕНА</div>
+                    <div class="table-header-item">ДЕЙСТВИЯ</div>
+                </div>
+            `;
+            
+            availableOrders.forEach((order, index) => {
+                const row = document.createElement('div');
+                row.className = 'order-row';
+                row.innerHTML = `
+                    <div class="order-cell order-id" data-label="№ заказа">
+                        <span class="order-id-text">#${order.id}</span>
+                    </div>
+                    <div class="order-cell address-container" data-label="Адрес отправления">
+                        <span class="address-line">${order.pickupAddress || 'Не указан'}</span>
+                    </div>
+                    <div class="order-cell address-container" data-label="Адрес доставки">
+                        <span class="address-line">${order.deliveryAddress || 'Не указан'}</span>
+                    </div>
+                    <div class="order-cell" data-label="Груз">
+                        <span class="cargo-text">${order.cargoDescription || 'Не указан'}</span>
+                    </div>
+                    <div class="order-cell" data-label="Расстояние">
+                        <span>${order.distance ? order.distance + ' км' : 'Не указано'}</span>
+                    </div>
+                    <div class="order-cell order-price-cell" data-label="Цена">
+                        <span class="order-price">${order.price ? `${order.price} ₽` : 'Рассчитывается'}</span>
+                    </div>
+                    <div class="order-cell order-actions-cell" data-label="Действия">
+                        <div class="actions-container">
+                            <div class="order-buttons">
+                                <button class="track-btn" onclick="viewOrderDetails(${order.id})">Подробнее</button>
+                                <button class="btn-accept driver-btn" onclick="acceptOrder(${order.id})">Принять заказ</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                ordersList.appendChild(row);
+            });
+            
+            // Обновляем счетчик
+            document.getElementById('available-orders-count').textContent = availableOrders.length;
+        }
+        
+        // Функция принятия заказа водителем
+        function acceptOrder(orderId) {
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+            if (orderIndex === -1) return;
+            
+            orders[orderIndex].status = 'in_transit';
+            orders[orderIndex].driverId = currentUser.id;
+            orders[orderIndex].acceptedAt = new Date().toISOString();
+            
+            localStorage.setItem('transportco_orders', JSON.stringify(orders));
+            
+            showNotification(`Заказ #${orderId} принят! Статус изменен на "В пути"`, 'success');
+            
+            // Обновляем списки
+            loadAvailableOrders();
+            loadDriverActiveOrders();
+            updateDriverStats();
+        }
+        
+        // Функция для загрузки активных заказов водителя
+        function loadDriverActiveOrders() {
+            const activeOrders = orders.filter(order => 
+                order.driverId === currentUser.id && 
+                (order.status === 'in_transit' || order.status === 'confirmed')
+            );
+            
+            const ordersList = document.getElementById('active-orders-list');
+            ordersList.innerHTML = '';
+            
+            if (activeOrders.length === 0) {
+                ordersList.innerHTML = `
+                    <div class="no-orders-container">
+                        <div class="no-orders-icon">🚗</div>
+                        <h3>Нет активных заказов</h3>
+                        <p>Примите заказ из раздела "Доступные заказы"</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            ordersList.innerHTML = `
+                <div class="table-header">
+                    <div class="table-header-item">№ ЗАКАЗА</div>
+                    <div class="table-header-item">АДРЕС ОТПРАВЛЕНИЯ</div>
+                    <div class="table-header-item">АДРЕС ДОСТАВКИ</div>
+                    <div class="table-header-item">СТАТУС</div>
+                    <div class="table-header-item">ДЕЙСТВИЯ</div>
+                </div>
+            `;
+            
+            activeOrders.forEach(order => {
+                const statusClass = getStatusClass(order.status);
+                const statusText = getStatusText(order.status);
+                
+                const row = document.createElement('div');
+                row.className = 'order-row';
+                row.innerHTML = `
+                    <div class="order-cell order-id" data-label="№ заказа">
+                        <span class="order-id-text">#${order.id}</span>
+                    </div>
+                    <div class="order-cell address-container" data-label="Адрес отправления">
+                        <span class="address-line">${order.pickupAddress || 'Не указан'}</span>
+                    </div>
+                    <div class="order-cell address-container" data-label="Адрес доставки">
+                        <span class="address-line">${order.deliveryAddress || 'Не указан'}</span>
+                    </div>
+                    <div class="order-cell order-status-cell" data-label="Статус">
+                        <div class="order-status ${statusClass}">
+                            <span class="status-icon">●</span>
+                            <span>${statusText}</span>
+                        </div>
+                    </div>
+                    <div class="order-cell order-actions-cell" data-label="Действия">
+                        <div class="actions-container">
+                            <div class="driver-actions">
+                                ${order.status === 'confirmed' ? 
+                                    `<button class="btn-picked driver-btn" onclick="markAsPickedUp(${order.id})">Груз принят</button>` : 
+                                    `<button class="btn-delivered driver-btn" onclick="markAsDelivered(${order.id})">Доставлено</button>`
+                                }
+                            </div>
+                        </div>
+                    </div>
+                `;
+                ordersList.appendChild(row);
+            });
+            
+            // Обновляем счетчик
+            document.getElementById('my-active-orders').textContent = activeOrders.length;
+        }
+        
+        // Функция отметки "Груз принят"
+        function markAsPickedUp(orderId) {
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+            if (orderIndex === -1) return;
+            
+            orders[orderIndex].status = 'in_transit';
+            orders[orderIndex].pickedUpAt = new Date().toISOString();
+            
+            localStorage.setItem('transportco_orders', JSON.stringify(orders));
+            
+            showNotification(`Груз по заказу #${orderId} принят!`, 'success');
+            loadDriverActiveOrders();
+        }
+        
+        // Функция отметки "Доставлено"
+        function markAsDelivered(orderId) {
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+            if (orderIndex === -1) return;
+            
+            orders[orderIndex].status = 'delivered';
+            orders[orderIndex].deliveredAt = new Date().toISOString();
+            
+            // Обновляем статистику водителя
+            if (currentUser.driverData) {
+                currentUser.driverData.deliveredOrders += 1;
+                currentUser.driverData.totalMileage += (orders[orderIndex].distance || 0);
+                
+                // Обновляем пользователя в базе
+                const userIndex = users.findIndex(u => u.id === currentUser.id);
+                if (userIndex !== -1) {
+                    users[userIndex] = currentUser;
+                    localStorage.setItem('transportco_users', JSON.stringify(users));
+                    localStorage.setItem('transportco_currentUser', JSON.stringify(currentUser));
+                }
+            }
+            
+            localStorage.setItem('transportco_orders', JSON.stringify(orders));
+            
+            showNotification(`Заказ #${orderId} доставлен!`, 'success');
+            loadDriverActiveOrders();
+            loadDriverHistory();
+            updateDriverStats();
+            loadDriverProfile();
+        }
+        
+        // Функция для загрузки истории доставок
+        function loadDriverHistory() {
+            const historyOrders = orders.filter(order => 
+                order.driverId === currentUser.id && 
+                order.status === 'delivered'
+            );
+            
+            const historyList = document.getElementById('delivery-history');
+            historyList.innerHTML = '';
+            
+            if (historyOrders.length === 0) {
+                historyList.innerHTML = `
+                    <div class="no-orders-container">
+                        <div class="no-orders-icon">📊</div>
+                        <h3>История доставок пуста</h3>
+                        <p>Вы еще не доставили ни одного заказа</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            historyList.innerHTML = `
+                <div class="table-header">
+                    <div class="table-header-item">№ ЗАКАЗА</div>
+                    <div class="table-header-item">ДАТА ДОСТАВКИ</div>
+                    <div class="table-header-item">МАРШРУТ</div>
+                    <div class="table-header-item">РАССТОЯНИЕ</div>
+                    <div class="table-header-item">ЦЕНА</div>
+                </div>
+            `;
+            
+            historyOrders.forEach(order => {
+                const deliveryDate = new Date(order.deliveredAt || order.createdAt);
+                const formattedDate = deliveryDate.toLocaleDateString('ru-RU', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                });
+                
+                const row = document.createElement('div');
+                row.className = 'order-row';
+                row.innerHTML = `
+                    <div class="order-cell order-id" data-label="№ заказа">
+                        <span class="order-id-text">#${order.id}</span>
+                    </div>
+                    <div class="order-cell date-container" data-label="Дата доставки">
+                        <span class="date-day">${formattedDate}</span>
+                    </div>
+                    <div class="order-cell" data-label="Маршрут">
+                        <span class="address-line">${order.pickupAddress} → ${order.deliveryAddress}</span>
+                    </div>
+                    <div class="order-cell" data-label="Расстояние">
+                        <span>${order.distance ? order.distance + ' км' : 'Не указано'}</span>
+                    </div>
+                    <div class="order-cell order-price-cell" data-label="Цена">
+                        <span class="order-price">${order.price ? `${order.price} ₽` : 'Рассчитывается'}</span>
+                    </div>
+                `;
+                historyList.appendChild(row);
+            });
+        }
+        
+        // Функция для загрузки профиля водителя
+        function loadDriverProfile() {
+            if (!currentUser.driverData) return;
+            
+            document.getElementById('driver-profile-license').value = currentUser.driverData.license;
+            document.getElementById('driver-profile-experience').value = `${currentUser.driverData.experience} лет`;
+            
+            const vehicleTypes = {
+                'light': 'Легковой автомобиль',
+                'van': 'Микроавтобус',
+                'truck': 'Грузовой автомобиль',
+                'refrigerator': 'Рефрижератор'
+            };
+            document.getElementById('driver-profile-vehicle').value = vehicleTypes[currentUser.driverData.vehicleType] || currentUser.driverData.vehicleType;
+            
+            document.getElementById('driver-profile-delivered').value = currentUser.driverData.deliveredOrders;
+            document.getElementById('driver-profile-mileage').value = `${currentUser.driverData.totalMileage} км`;
+            
+            // Отображаем рейтинг звездами
+            const ratingStars = document.getElementById('driver-rating-stars');
+            ratingStars.innerHTML = '';
+            const rating = currentUser.driverData.rating || 0;
+            
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('span');
+                star.className = i <= Math.floor(rating) ? 'star filled' : 'star';
+                star.innerHTML = '★';
+                ratingStars.appendChild(star);
+            }
+        }
+        
+        // Функция для обновления статистики водителя
+        function updateDriverStats() {
+            const availableOrders = orders.filter(order => order.status === 'confirmed');
+            const activeOrders = orders.filter(order => 
+                order.driverId === currentUser.id && 
+                (order.status === 'in_transit' || order.status === 'confirmed')
+            );
+            
+            document.getElementById('available-orders-count').textContent = availableOrders.length;
+            document.getElementById('my-active-orders').textContent = activeOrders.length;
+            
+            if (currentUser.driverData) {
+                document.getElementById('driver-rating').textContent = currentUser.driverData.rating;
+            }
+        }
+        
+        // ФУНКЦИИ АДМИНИСТРАТОРА
+        
+        // Функция для отображения вкладки администратора
+        function showAdminTab(tabName) {
+            // Убираем активный класс у всех кнопок
+            const navButtons = document.querySelectorAll('.role-nav-btn');
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Добавляем активный класс нажатой кнопке
+            document.querySelector(`.role-nav-btn[onclick*="${tabName}"]`).classList.add('active');
+            
+            // Скрываем все вкладки администратора
+            const tabs = ['admin-dashboard', 'admin-driver-applications', 'admin-drivers', 'admin-orders', 'admin-assign-driver'];
+            tabs.forEach(tab => {
+                const tabElement = document.getElementById(tab);
+                if (tabElement) tabElement.style.display = 'none';
+            });
+            
+            // Показываем выбранную вкладку
+            const tabElement = document.getElementById(`admin-${tabName}`);
+            if (tabElement) {
+                tabElement.style.display = 'block';
+                
+                // Обновляем данные в зависимости от вкладки
+                switch(tabName) {
+                    case 'dashboard':
+                        updateAdminStats();
+                        break;
+                    case 'driver-applications':
+                        loadDriverApplications();
+                        break;
+                    case 'drivers':
+                        loadDriversList();
+                        break;
+                    case 'orders':
+                        loadAdminOrders();
+                        break;
+                    case 'assign-driver':
+                        loadUnassignedOrders();
+                        break;
+                }
+            }
+        }
+        
+        // Функция для обновления статистики администратора
+        function updateAdminStats() {
+            const pendingApps = driverApplications.filter(app => app.status === 'pending');
+            const activeDrivers = users.filter(user => user.role === 'driver' && user.driverData && user.driverData.status === 'active');
+            const totalOrders = orders.length;
+            const unassignedOrders = orders.filter(order => !order.driverId && order.status === 'confirmed');
+            
+            document.getElementById('pending-applications-count').textContent = `${pendingApps.length} ожидают рассмотрения`;
+            document.getElementById('active-drivers-count').textContent = `${activeDrivers.length} активных водителей`;
+            document.getElementById('total-orders-count').textContent = `${totalOrders} всего заказов`;
+            document.getElementById('unassigned-orders-count').textContent = `${unassignedOrders.length} заказов без водителя`;
+        }
+        
+        // Функция для загрузки заявок водителей
+        function loadDriverApplications() {
+            const pendingApps = driverApplications.filter(app => app.status === 'pending');
+            
+            const appsList = document.getElementById('driver-applications-list');
+            appsList.innerHTML = '';
+            
+            if (pendingApps.length === 0) {
+                appsList.innerHTML = `
+                    <div class="no-orders-container">
+                        <div class="no-orders-icon">✅</div>
+                        <h3>Нет заявок на рассмотрении</h3>
+                        <p>Все заявки обработаны</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            appsList.innerHTML = `
+                <div class="admin-table-header" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">
+                    <div class="table-header-item">ИМЯ</div>
+                    <div class="table-header-item">ТЕЛЕФОН</div>
+                    <div class="table-header-item">ПРАВА</div>
+                    <div class="table-header-item">ОПЫТ</div>
+                    <div class="table-header-item">ТРАНСПОРТ</div>
+                    <div class="table-header-item">ДЕЙСТВИЯ</div>
+                </div>
+            `;
+            
+            pendingApps.forEach(app => {
+                const row = document.createElement('div');
+                row.className = 'admin-table-row';
+                row.style.gridTemplateColumns = '1fr 1fr 1fr 1fr 1fr 1fr';
+                row.innerHTML = `
+                    <div class="admin-table-cell" data-label="Имя">
+                        <strong>${app.userName}</strong><br>
+                        <small>${app.userEmail}</small>
+                    </div>
+                    <div class="admin-table-cell" data-label="Телефон">
+                        ${app.phone}
+                    </div>
+                    <div class="admin-table-cell" data-label="Права">
+                        ${app.license}
+                    </div>
+                    <div class="admin-table-cell" data-label="Опыт">
+                        ${app.experience} лет
+                    </div>
+                    <div class="admin-table-cell" data-label="Транспорт">
+                        ${app.vehicleType}
+                    </div>
+                    <div class="admin-table-cell" data-label="Действия">
+                        <div class="driver-actions">
+                            <button class="btn-accept driver-btn" onclick="approveDriverApplication(${app.id})">Нанять</button>
+                            <button class="btn-login driver-btn" onclick="rejectDriverApplication(${app.id})">Отклонить</button>
+                        </div>
+                    </div>
+                `;
+                appsList.appendChild(row);
+            });
+        }
+        
+        // Функция одобрения заявки водителя
+        function approveDriverApplication(appId) {
+            const appIndex = driverApplications.findIndex(app => app.id === appId);
+            if (appIndex === -1) return;
+            
+            const application = driverApplications[appIndex];
+            
+            // Находим пользователя
+            const userIndex = users.findIndex(u => u.id === application.userId);
+            if (userIndex === -1) return;
+            
+            // Обновляем роль пользователя
+            users[userIndex].role = 'driver';
+            users[userIndex].driverData = {
+                license: application.license,
+                experience: application.experience,
+                vehicleType: application.vehicleType,
+                rating: 5.0, // Начальный рейтинг
+                deliveredOrders: 0,
+                totalMileage: 0,
+                status: 'active'
+            };
+            
+            // Обновляем статус заявки
+            driverApplications[appIndex].status = 'approved';
+            
+            // Сохраняем изменения
+            localStorage.setItem('transportco_users', JSON.stringify(users));
+            localStorage.setItem('transportco_driver_apps', JSON.stringify(driverApplications));
+            
+            // Если это текущий пользователь, обновляем его данные
+            if (currentUser && currentUser.id === application.userId) {
+                currentUser = users[userIndex];
+                localStorage.setItem('transportco_currentUser', JSON.stringify(currentUser));
+                updateUIForRole();
+            }
+            
+            showNotification(`Заявка от ${application.userName} одобрена! Пользователь стал водителем.`, 'success');
+            
+            // Обновляем списки
+            loadDriverApplications();
+            updateAdminStats();
+            loadDriversList();
+        }
+        
+        // Функция отклонения заявки водителя
+        function rejectDriverApplication(appId) {
+            const appIndex = driverApplications.findIndex(app => app.id === appId);
+            if (appIndex === -1) return;
+            
+            const application = driverApplications[appIndex];
+            driverApplications[appIndex].status = 'rejected';
+            
+            localStorage.setItem('transportco_driver_apps', JSON.stringify(driverApplications));
+            
+            showNotification(`Заявка от ${application.userName} отклонена.`, 'info');
+            loadDriverApplications();
+            updateAdminStats();
+        }
+        
+        // Функция для загрузки списка водителей
+        function loadDriversList() {
+            const activeDrivers = users.filter(user => user.role === 'driver' && user.driverData);
+            
+            const driversList = document.getElementById('drivers-list');
+            driversList.innerHTML = '';
+            
+            if (activeDrivers.length === 0) {
+                driversList.innerHTML = `
+                    <div class="no-orders-container">
+                        <div class="no-orders-icon">👨‍✈️</div>
+                        <h3>Нет активных водителей</h3>
+                        <p>Одобрите заявки из раздела "Заявки водителей"</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            driversList.innerHTML = `
+                <div class="admin-table-header" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">
+                    <div class="table-header-item">ИМЯ</div>
+                    <div class="table-header-item">ТЕЛЕФОН</div>
+                    <div class="table-header-item">РЕЙТИНГ</div>
+                    <div class="table-header-item">ДОСТАВКИ</div>
+                    <div class="table-header-item">ПРОБЕГ</div>
+                    <div class="table-header-item">СТАТУС</div>
+                </div>
+            `;
+            
+            activeDrivers.forEach(driver => {
+                const row = document.createElement('div');
+                row.className = 'admin-table-row';
+                row.style.gridTemplateColumns = '1fr 1fr 1fr 1fr 1fr 1fr';
+                
+                // Создаем звезды рейтинга
+                let starsHtml = '';
+                const rating = driver.driverData.rating || 0;
+                for (let i = 1; i <= 5; i++) {
+                    starsHtml += i <= Math.floor(rating) ? '★' : '☆';
+                }
+                
+                row.innerHTML = `
+                    <div class="admin-table-cell" data-label="Имя">
+                        <strong>${driver.firstName} ${driver.lastName}</strong><br>
+                        <small>${driver.email}</small>
+                    </div>
+                    <div class="admin-table-cell" data-label="Телефон">
+                        ${driver.phone}
+                    </div>
+                    <div class="admin-table-cell" data-label="Рейтинг">
+                        ${starsHtml}<br>
+                        <small>${rating.toFixed(1)}</small>
+                    </div>
+                    <div class="admin-table-cell" data-label="Доставки">
+                        ${driver.driverData.deliveredOrders || 0}
+                    </div>
+                    <div class="admin-table-cell" data-label="Пробег">
+                        ${driver.driverData.totalMileage || 0} км
+                    </div>
+                    <div class="admin-table-cell" data-label="Статус">
+                        <span class="order-status delivered">Активен</span>
+                    </div>
+                `;
+                driversList.appendChild(row);
+            });
+        }
+        
+        // Функция для загрузки всех заказов (админ)
+        function loadAdminOrders() {
+            const statusFilter = document.getElementById('admin-status-filter').value;
+            const driverFilter = document.getElementById('admin-driver-filter').value;
+            
+            let filteredOrders = [...orders];
+            
+            // Фильтр по статусу
+            if (statusFilter !== 'all') {
+                filteredOrders = filteredOrders.filter(order => order.status === statusFilter);
+            }
+            
+            // Фильтр по водителю
+            if (driverFilter === 'unassigned') {
+                filteredOrders = filteredOrders.filter(order => !order.driverId);
+            }
+            
+            const ordersList = document.getElementById('admin-orders-list');
+            ordersList.innerHTML = '';
+            
+            if (filteredOrders.length === 0) {
+                ordersList.innerHTML = `
+                    <div class="no-orders-container">
+                        <div class="no-orders-icon">📋</div>
+                        <h3>Заказы не найдены</h3>
+                        <p>Измените параметры фильтрации</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            ordersList.innerHTML = `
+                <div class="table-header">
+                    <div class="table-header-item">№ ЗАКАЗА</div>
+                    <div class="table-header-item">КЛИЕНТ</div>
+                    <div class="table-header-item">ТЕЛЕФОН</div>
+                    <div class="table-header-item">МАРШРУТ</div>
+                    <div class="table-header-item">СТАТУС</div>
+                    <div class="table-header-item">ВОДИТЕЛЬ</div>
+                    <div class="table-header-item">ДЕЙСТВИЯ</div>
+                </div>
+            `;
+            
+            filteredOrders.forEach(order => {
+                const statusClass = getStatusClass(order.status);
+                const statusText = getStatusText(order.status);
+                
+                // Находим водителя
+                let driverName = 'Не назначен';
+                if (order.driverId) {
+                    const driver = users.find(u => u.id === order.driverId);
+                    if (driver) {
+                        driverName = `${driver.firstName} ${driver.lastName}`;
+                    }
+                }
+                
+                const row = document.createElement('div');
+                row.className = 'order-row';
+                row.innerHTML = `
+                    <div class="order-cell order-id" data-label="№ заказа">
+                        <span class="order-id-text">#${order.id}</span>
+                    </div>
+                    <div class="order-cell" data-label="Клиент">
+                        <span>${order.senderName}</span>
+                    </div>
+                    <div class="order-cell" data-label="Телефон">
+                        <span>${order.senderPhone}</span>
+                    </div>
+                    <div class="order-cell" data-label="Маршрут">
+                        <span class="address-line">${order.pickupAddress} → ${order.deliveryAddress}</span>
+                    </div>
+                    <div class="order-cell order-status-cell" data-label="Статус">
+                        <div class="order-status ${statusClass}">
+                            <span class="status-icon">●</span>
+                            <span>${statusText}</span>
+                        </div>
+                    </div>
+                    <div class="order-cell" data-label="Водитель">
+                        <span>${driverName}</span>
+                    </div>
+                    <div class="order-cell order-actions-cell" data-label="Действия">
+                        <div class="actions-container">
+                            <div class="order-buttons">
+                                <button class="view-btn" onclick="viewOrderDetails(${order.id})">Подробнее</button>
+                                ${!order.driverId && order.status === 'confirmed' ? 
+                                    `<button class="track-btn" onclick="openAssignDriverModal(${order.id})">Назначить</button>` : ''
+                                }
+                            </div>
+                        </div>
+                    </div>
+                `;
+                ordersList.appendChild(row);
+            });
+        }
+        
+        // Функция фильтрации заказов (админ)
+        function filterAdminOrders() {
+            loadAdminOrders();
+        }
+        
+        // Функция сброса фильтров (админ)
+        function resetAdminFilters() {
+            document.getElementById('admin-status-filter').value = 'all';
+            document.getElementById('admin-driver-filter').value = 'all';
+            loadAdminOrders();
+        }
+        
+        // Функция для загрузки заказов без водителя
+        function loadUnassignedOrders() {
+            const unassignedOrders = orders.filter(order => !order.driverId && order.status === 'confirmed');
+            
+            const content = document.getElementById('assign-driver-content');
+            content.innerHTML = '';
+            
+            if (unassignedOrders.length === 0) {
+                content.innerHTML = `
+                    <div class="no-orders-container">
+                        <div class="no-orders-icon">✅</div>
+                        <h3>Нет заказов для назначения</h3>
+                        <p>Все заказы уже назначены водителям</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            content.innerHTML = `
+                <div class="orders-table-container">
+                    <div class="table-header">
+                        <div class="table-header-item">№ ЗАКАЗА</div>
+                        <div class="table-header-item">КЛИЕНТ</div>
+                        <div class="table-header-item">МАРШРУТ</div>
+                        <div class="table-header-item">ГРУЗ</div>
+                        <div class="table-header-item">ДЕЙСТВИЯ</div>
+                    </div>
+                </div>
+            `;
+            
+            const ordersList = content.querySelector('.orders-table-container');
+            
+            unassignedOrders.forEach(order => {
+                const row = document.createElement('div');
+                row.className = 'order-row';
+                row.innerHTML = `
+                    <div class="order-cell order-id" data-label="№ заказа">
+                        <span class="order-id-text">#${order.id}</span>
+                    </div>
+                    <div class="order-cell" data-label="Клиент">
+                        <span>${order.senderName}<br><small>${order.senderPhone}</small></span>
+                    </div>
+                    <div class="order-cell" data-label="Маршрут">
+                        <span class="address-line">${order.pickupAddress} → ${order.deliveryAddress}</span>
+                    </div>
+                    <div class="order-cell" data-label="Груз">
+                        <span class="cargo-text">${order.cargoDescription}</span>
+                    </div>
+                    <div class="order-cell order-actions-cell" data-label="Действия">
+                        <div class="actions-container">
+                            <div class="order-buttons">
+                                <button class="view-btn" onclick="viewOrderDetails(${order.id})">Подробнее</button>
+                                <button class="track-btn" onclick="openAssignDriverModal(${order.id})">Назначить водителя</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                ordersList.appendChild(row);
+            });
+        }
+        
+        // Функция для просмотра деталей заказа
+        function viewOrderDetails(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            // Находим водителя
+            let driverInfo = 'Не назначен';
+            if (order.driverId) {
+                const driver = users.find(u => u.id === order.driverId);
+                if (driver) {
+                    driverInfo = `${driver.firstName} ${driver.lastName}<br>${driver.phone}`;
+                }
+            }
+            
+            const statusText = getStatusText(order.status);
+            const categoryName = getCategoryName(order.productCategory);
+            const orderDate = new Date(order.createdAt).toLocaleDateString('ru-RU');
+            const shippingDate = new Date(order.shippingDate).toLocaleDateString('ru-RU');
+            
+            document.getElementById('order-details-content').innerHTML = `
+                <div class="order-form-row">
+                    <div class="order-form-group">
+                        <label>Номер заказа</label>
+                        <input type="text" class="profile-field-readonly" value="#${order.id}" readonly>
+                    </div>
+                    <div class="order-form-group">
+                        <label>Статус</label>
+                        <input type="text" class="profile-field-readonly" value="${statusText}" readonly>
+                    </div>
+                </div>
+                
+                <h3>Информация о клиенте</h3>
+                <div class="order-divider"></div>
+                
+                <div class="order-form-row">
+                    <div class="order-form-group">
+                        <label>Имя клиента</label>
+                        <input type="text" class="profile-field-readonly" value="${order.senderName}" readonly>
+                    </div>
+                    <div class="order-form-group">
+                        <label>Телефон</label>
+                        <input type="text" class="profile-field-readonly" value="${order.senderPhone}" readonly>
+                    </div>
+                </div>
+                
+                <div class="order-form-row">
+                    <div class="order-form-group">
+                        <label>Email</label>
+                        <input type="text" class="profile-field-readonly" value="${order.senderEmail || 'Не указан'}" readonly>
+                    </div>
+                    <div class="order-form-group">
+                        <label>Дата заказа</label>
+                        <input type="text" class="profile-field-readonly" value="${orderDate}" readonly>
+                    </div>
+                </div>
+                
+                <h3>Информация о грузе</h3>
+                <div class="order-divider"></div>
+                
+                <div class="order-form-row">
+                    <div class="order-form-group">
+                        <label>Описание</label>
+                        <textarea class="profile-field-readonly" rows="3" readonly>${order.cargoDescription}</textarea>
+                    </div>
+                </div>
+                
+                <div class="order-form-row">
+                    <div class="order-form-group">
+                        <label>Категория</label>
+                        <input type="text" class="profile-field-readonly" value="${categoryName}" readonly>
+                    </div>
+                    <div class="order-form-group">
+                        <label>Тип груза</label>
+                        <input type="text" class="profile-field-readonly" value="${order.cargoType}" readonly>
+                    </div>
+                </div>
+                
+                <div class="order-form-row">
+                    <div class="order-form-group">
+                        <label>Вес</label>
+                        <input type="text" class="profile-field-readonly" value="${order.cargoWeight} кг" readonly>
+                    </div>
+                    <div class="order-form-group">
+                        <label>Объем</label>
+                        <input type="text" class="profile-field-readonly" value="${order.cargoVolume} м³" readonly>
+                    </div>
+                </div>
+                
+                <h3>Маршрут</h3>
+                <div class="order-divider"></div>
+                
+                <div class="order-form-row">
+                    <div class="order-form-group">
+                        <label>Откуда</label>
+                        <input type="text" class="profile-field-readonly" value="${order.pickupAddress}" readonly>
+                    </div>
+                    <div class="order-form-group">
+                        <label>Куда</label>
+                        <input type="text" class="profile-field-readonly" value="${order.deliveryAddress}" readonly>
+                    </div>
+                </div>
+                
+                <div class="order-form-row">
+                    <div class="order-form-group">
+                        <label>Расстояние</label>
+                        <input type="text" class="profile-field-readonly" value="${order.distance} км" readonly>
+                    </div>
+                    <div class="order-form-group">
+                        <label>Дата отправки</label>
+                        <input type="text" class="profile-field-readonly" value="${shippingDate}" readonly>
+                    </div>
+                </div>
+                
+                <h3>Финансы</h3>
+                <div class="order-divider"></div>
+                
+                <div class="order-form-row">
+                    <div class="order-form-group">
+                        <label>Стоимость</label>
+                        <input type="text" class="profile-field-readonly" value="${order.price} ₽" readonly>
+                    </div>
+                    <div class="order-form-group">
+                        <label>Страховка</label>
+                        <input type="text" class="profile-field-readonly" value="${order.insurance ? 'Да' : 'Нет'}" readonly>
+                    </div>
+                </div>
+                
+                <h3>Водитель</h3>
+                <div class="order-divider"></div>
+                
+                <div class="order-form-group">
+                    <label>Назначенный водитель</label>
+                    <div style="padding: 15px; background: #f8f9fa; border-radius: 6px;">
+                        ${driverInfo}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('viewOrderModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Функция закрытия модального окна просмотра заказа
+        function closeViewOrderModal() {
+            document.getElementById('viewOrderModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Функция открытия модального окна назначения водителя
+        function openAssignDriverModal(orderId) {
+            orderToAssign = orderId;
+            
+            // Загружаем список водителей
+            const drivers = users.filter(user => user.role === 'driver' && user.driverData);
+            const select = document.getElementById('select-driver');
+            select.innerHTML = '<option value="">Выберите водителя...</option>';
+            
+            drivers.forEach(driver => {
+                const option = document.createElement('option');
+                option.value = driver.id;
+                option.textContent = `${driver.firstName} ${driver.lastName} (Рейтинг: ${driver.driverData.rating})`;
+                select.appendChild(option);
+            });
+            
+            document.getElementById('assignDriverModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Функция закрытия модального окна назначения водителя
+        function closeAssignDriverModal() {
+            document.getElementById('assignDriverModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            orderToAssign = null;
+        }
+        
+        // Функция назначения водителя на заказ
+        function assignDriverToOrder() {
+            const driverId = parseInt(document.getElementById('select-driver').value);
+            if (!driverId) {
+                showNotification('Выберите водителя', 'warning');
+                return;
+            }
+            
+            const orderIndex = orders.findIndex(o => o.id === orderToAssign);
+            if (orderIndex === -1) return;
+            
+            // Назначаем водителя
+            orders[orderIndex].driverId = driverId;
+            orders[orderIndex].status = 'confirmed'; // Подтверждаем заказ
+            orders[orderIndex].assignedAt = new Date().toISOString();
+            
+            localStorage.setItem('transportco_orders', JSON.stringify(orders));
+            
+            // Отправляем уведомление водителю
+            const driver = users.find(u => u.id === driverId);
+            if (driver) {
+                showNotification(`Водитель ${driver.firstName} ${driver.lastName} назначен на заказ #${orderToAssign}`, 'success');
+            }
+            
+            closeAssignDriverModal();
+            
+            // Обновляем все списки
+            loadAdminOrders();
+            loadUnassignedOrders();
+            updateAdminStats();
+            
+            // Если текущий пользователь - водитель, обновляем его список
+            if (currentUser && currentUser.id === driverId) {
+                loadAvailableOrders();
+            }
         }
         
         // Функции для работы с модальными окнами авторизации и регистрации
@@ -3367,7 +5150,8 @@
                         password: tempRegistrationData.password,
                         firstName: tempRegistrationData.firstName,
                         lastName: tempRegistrationData.lastName,
-                        verified: true
+                        verified: true,
+                        role: 'client' // По умолчанию клиент
                     };
                     
                     users.push(newUser);
@@ -3685,8 +5469,8 @@
                 // Проверяем, что именно неверно
                 const userExists = users.some(u => u.email === login || u.phone === login);
                 if (!userExists) {
-                    showError('auth-login', 'Неверный телефон или email'); // ИЗМЕНЕНО: было "Неверный логин"
-                    showNotification('Неверный телефон или email', 'error'); // ИЗМЕНЕНО: было "Пользователь с таким логином не найден"
+                    showError('auth-login', 'Неверный телефон или email');
+                    showNotification('Неверный телефон или email', 'error');
                 } else {
                     showError('auth-password', 'Неверный пароль');
                     showNotification('Неверный пароль', 'error');
@@ -4041,7 +5825,7 @@
         
         // Закрытие модальных окон при клике вне их
         document.addEventListener('click', function(event) {
-            const modals = ['loginModal', 'registerModal', 'forgotPasswordModal', 'confirmCodeModal', 'confirmRegisterCodeModal'];
+            const modals = ['loginModal', 'registerModal', 'forgotPasswordModal', 'confirmCodeModal', 'confirmRegisterCodeModal', 'viewOrderModal', 'assignDriverModal'];
             
             modals.forEach(modalId => {
                 const modal = document.getElementById(modalId);
@@ -4051,6 +5835,8 @@
                     if (modalId === 'forgotPasswordModal') closeForgotPasswordModal();
                     if (modalId === 'confirmCodeModal') closeConfirmCodeModal();
                     if (modalId === 'confirmRegisterCodeModal') closeConfirmRegisterCodeModal();
+                    if (modalId === 'viewOrderModal') closeViewOrderModal();
+                    if (modalId === 'assignDriverModal') closeAssignDriverModal();
                 }
             });
         });
@@ -4063,6 +5849,8 @@
                 closeForgotPasswordModal();
                 closeConfirmCodeModal();
                 closeConfirmRegisterCodeModal();
+                closeViewOrderModal();
+                closeAssignDriverModal();
             }
         });
         
@@ -4096,6 +5884,11 @@
             }
             if (searchInput) {
                 searchInput.addEventListener('input', filterProfileOrders);
+            }
+            
+            // Инициализируем данные админа
+            if (currentUser && currentUser.role === 'admin') {
+                updateAdminStats();
             }
         });
     </script>
